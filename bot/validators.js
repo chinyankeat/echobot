@@ -22,7 +22,7 @@ lib.dialog('email',
   
 lib.dialog('otp',
     builder.DialogAction.validatedPrompt(builder.PromptType.text, function (response) {
-console.log ("otp = " + session.userData.oneTimeCode);
+    console.log ("otp = " + session.userData.oneTimeCode);
         return response == '1234';
     }));
 //lib.dialog('otp', [

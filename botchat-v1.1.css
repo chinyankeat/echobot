@@ -5,7 +5,7 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 
 .wc-app button {
   background-color: #FFE227;
-  border: 1px solid #055cb2;    /* modified by Chin 3 May 2017 */
+  border: 1px solid #00B9F0;
   border-radius: 6px;    /* chin modified 28 Apr 2017 */
   color: #000;
   cursor: pointer;
@@ -204,20 +204,20 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 
 /* cards */
 .wc-card {
-  background-color: rgba(255, 255, 255, 0); /* modified by Chin 3 May 2017 */
+  background-color: #fff;
   font-size: 13px; }
   .wc-card button {
-    background-color: #FFFFFF;    /* modified by Chin 3 May 2017 */
-    color: #055cb2;    /* modified by Chin 28 Apr 2017 */
+    background-color: transparent;
+    color: #0089F0;    /* modified by Chin 28 Apr 2017 */
     font-weight: 600;  /* modified by Chin 28 Apr 2017 */
     min-height: 32px;
     width: 300px;      /* modified by Chin 28 Apr 2017 */
     padding: 0 16px;
     border-radius: 6px; } /* Chin added 28 Apr 2017 */
   .wc-card button:hover {
-    background-color: #055CB2;    /* modified by Chin 3 May 2017 */
-    border-color: #055CB2;        /* modified by Chin 3 May 2017 */
-    color: #FFFFFF; }             /* modified by Chin 3 May 2017 */
+    background-color: transparent;
+    border-color: #3a96dd;
+    color: #FFE227; }
   .wc-card button:active {
     background-color: #3a96dd;
     border-color: #3a96dd;
@@ -344,7 +344,7 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 .wc-carousel {
   position: relative; }
   .wc-carousel button.scroll {
-    background-color: #000000;    /* Modified by Chin 3 May 2017 */
+    background-color: #d2dde5;
     height: 28px;
     overflow: hidden;
     padding: 0;
