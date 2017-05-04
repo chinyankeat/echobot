@@ -14,19 +14,34 @@ var math = require('mathjs');
 var request = require("request");
 var emoji = require('node-emoji');
 
-// Get secrets from server environment
-var botConnectorOptions = { 
-    appId: process.env.BOTFRAMEWORK_APPID, 
-    appPassword: process.env.BOTFRAMEWORK_APPSECRET
-};
 
+////////////////////////////////////////////////////////////////////////////
+// Global Variables
 // Session Data
 var LastMenu = 'LastMenu';
 var NumOfFeedback = 'NumOfFeedback';
 var DialogId = 'DialogId';
 var DialogState = 'DialogState';
 var imagedir = 'https://yellowchat.azurewebsites.net';
+var OneTimePin = 'OneTimePin';
+var PhoneNumber = 'PhoneNumber';
+var ValidatedTime = 'ValidatedTime';
 
+// Bot Retry Parameters
+var MaxRetries = 2; 
+var DefaultErrorPrompt = "Oops, I didn't get that. Click on any of the below for further information."
+// API Gateway Variables
+var ApiGwSmsAuthToken = '';
+var ApiGwSmsAuthTokenExpiry = 0;
+var ApiGwSmsCounter = 0;
+
+////////////////////////////////////////////////////////////////////////////
+// Initialization functions
+// Get secrets from server environment
+var botConnectorOptions = { 
+    appId: process.env.BOTFRAMEWORK_APPID, 
+    appPassword: process.env.BOTFRAMEWORK_APPSECRET
+};
 // Create bot
 var connector = new builder.ChatConnector(botConnectorOptions);
 var bot = new builder.UniversalBot(connector, [
@@ -34,23 +49,20 @@ var bot = new builder.UniversalBot(connector, [
     function (session) {
         session.beginDialog('menu');
     },
-
     function (session, results) {
         session.endConversation("Please type Menu");
     }
+
 ]);
-
-
-// Validators
+// Require Functions
 bot.library(require('./validators').createLibrary());
+// start by getting API Gateway token first
+GetSmsAuthToken();
+////////////////////////////////////////////////////////////////////////////
+
+
 
 ////////////////////////////////////////////////////////////////////////////
-// Global Variables
-var MaxRetries = 2; 
-var DefaultErrorPrompt = "Oops, I didn't get that. Click on any of the below for further information."
-
-
-
 // Send welcome when conversation with bot is started, by initiating the root dialog
 bot.on('conversationUpdate', function (message) {
     if (message.membersAdded) {
@@ -107,40 +119,42 @@ function trackBotEvent(session, description, dialog_state, storeLastMenu) {
 //    var d = new Date();
 //    var offset = (new Date().getTimezoneOffset() / 60) * -1;
 //    var nowtime = new Date(d.getTime() + offset).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    
+    if(session.privateConversationData[DialogId] === undefined) {
+        session.privateConversationData[DialogId] = session.message.address.id;
+    }
+
     var options = {
         method: 'POST',
-        url: 'https://digibid.azurewebsites.net/action.ashx',
+        url: process.env.CHATBOT_LOG_URL,
         qs: {       action: 'json' },
         headers: {  'content-type': 'multipart/form-data'   },
         formData: { 
             data: '{\
 "command": "update_chat_log",\
-"auth_key": "a6hea2",\
-"chat_id": "'+session.message.address.conversation.id+'",\
-"dialog_id": "'+session.privateConversationData[DialogId]+'",\
+"auth_key": "' + process.env.CHATBOT_LOG_AUTH_KEY+ '",\
+"chat_id": "'  + session.message.address.conversation.id+ '",\
+"dialog_id": "'+ session.privateConversationData[DialogId]+ '",\
 "dialog_state":"' + dialog_state + '",\
 "dialog_type":"",\
 "dialog_input":"",\
 "chat_log": "'+session.privateConversationData[LastMenu]+'"}'
-        }   
+        }
     };
-    
-    if (process.env.STAGING) {
-        console.log("Logging : " + options.formData.data);  // Log if this is Staging Environment
-    }
-    if(process.env.STAGING != 1) {
+
+    if (process.env.LOGGING) {
         try{
             request(options, function (error, response, body) { // Send to DB if this is Production Environment
                 if (process.env.DEVELOPMENT) {
-                    console.log("DB Log:" + body);              // Log if this is Production & Development Mode
+                    //console.log("DB Log:" + body);              // Log if this is Production & Development Mode
                 }
             })
         } catch (e) {
             if (process.env.DEVELOPMENT) {
-                console.log("cannot log to DB");                // Log if this is Production &Development Environment
+                //console.log("cannot log to DB");                // Log if this is Production &Development Environment
             }
         }
+    } else {
+        console.log("Logging : " + options.formData.data);  // Log if this is Staging Environment
     }
 }
 
@@ -175,9 +189,8 @@ bot.dialog('intro', [
                 contentType: 'image/png',
                 name: 'BotFrameworkOverview.png'
             });
-        session.send(msg);
-        
-        session.replaceDialog('menu');
+        session.send(msg);        
+        session.replaceDialog('menu');        
     }
 ]);
 
@@ -1144,7 +1157,7 @@ bot.dialog('GoingOverseas', [
     function (session) {
         trackBotEvent(session, 'menu|CommonlyAskedQuestion|AllAboutMyAccount|AllAboutMyAccount2|GoingOverseas',1);
 
-        builder.Prompts.choice(session, "For short holidays, stay in touch by activating Roaming Services", 'menu', { listStyle: builder.ListStyle.button });
+        builder.Prompts.choice(session, "For short holidays, stay in touch by activating Roaming Services", 'Main Menu', { listStyle: builder.ListStyle.button });
     },
     function (session, results) {
         session.replaceDialog('menu');
@@ -1596,57 +1609,75 @@ bot.dialog('getFeedback', [
                 trackBotEvent(session,session.privateConversationData[LastMenu]+'|Feedback 5',1,0);
                 break;
             default:
-                session.send("Sorry, I didn\'t quite get that.");
+                session.send("Please help to rate me 1~5 above");
                 break;
         }
-
         session.send('Thank you for your feedback');
         session.replaceDialog('menu');
     }
 ])
 
-
-
-
 bot.dialog('CheckMyAccount', [
     function (session) {
-        session.send("Just let us verify your identity for a sec ");
-        
-        session.beginDialog('validators:phonenumber', {
-            prompt: session.gettext('What is your phone number?'),
-            retryPrompt: session.gettext('The phone number is invalid. Please key in Digi Phone Number 01xxxxxxxx'),
-            maxRetries: MaxRetries
-        });
+        var currentTime = Date.now();
+        var diffTime = currentTime - session.privateConversationData[ValidatedTime];
+        // OTP will be valid for 1 hour 60*60*1000
+        if((session.privateConversationData[ValidatedTime] == undefined) || diffTime>3600000) 
+        {
+            session.send("Just let us verify your identity for a sec ");
+
+            session.beginDialog('validators:phonenumber', {
+                prompt: session.gettext('What is your phone number? (e.g. 01xxxxxxxx )'),
+                retryPrompt: session.gettext('The phone number is invalid. Please key in Digi Phone Number 01xxxxxxxx'),
+                maxRetries: MaxRetries
+            });
+        } else {
+            session.replaceDialog('PrepaidAccountOverview');
+            return;
+
+        }
     },
     function (session, results) {
-        session.userData.phoneNumber = results.response;
-        session.userData.oneTimeCode = GenerateOtp(session.userData.phoneNumber);
+        session.privateConversationData[PhoneNumber] = results.response;
+        session.privateConversationData[OneTimePin] = GenerateOtp2(session.privateConversationData[PhoneNumber]);
 
         if (process.env.DEVELOPMENT) {
-            console.log("OTP is " + session.userData.oneTimeCode);
+            console.log("OTP is " + session.privateConversationData[OneTimePin]);
         }
-        
-        session.beginDialog('validators:otp', {
-            prompt: session.gettext('I have just sent the One Time Code to you. Can you please key in the 4 digit code?'),
-            retryPrompt: session.gettext('Sorry, the code is incorrect. Let\'s try 1 more time'),
-            maxRetries: 1
-        });
+
+        builder.Prompts.text(session, "I have just sent the One Time Code to you. Can you please key in the 4 digit code?");
     },
     function (session, results) {
-        session.send('Your Phone is ' + session.userData.phoneNumber + ' your code is ' + session.userData.oneTimeCode);
-        session.replaceDialog('PrepaidAccountOverview');
+        if(session.privateConversationData[OneTimePin] == results.response)
+        {
+            session.privateConversationData[ValidatedTime] = Date.now();
+            session.replaceDialog('PrepaidAccountOverview');
+            return;
+        }
+        builder.Prompts.text(session, "Ops, the OTP is wrong. Can you please key in the 4 digit code?");
     },
-    function (session) {
-        // Reload menu
+    function (session, results) {   // OTP Wrong, Retry second time
+        if(session.privateConversationData[OneTimePin] == results.response)
+        {
+            session.privateConversationData[ValidatedTime] = Date.now();
+            session.replaceDialog('PrepaidAccountOverview');
+            return;
+        }
+        session.send('Ops, the OTP is wrong. Sorry, I\'ll bring you back to our Main Menu');
         session.replaceDialog('menu');
     }
 ]).triggerAction({
     matches: /^(chinyankeat)/i
 });
 
+// Generate OTP using SBP API
 function GenerateOtp(phoneNumber){
     
-    var randomotp = math.randomInt(1,9999);
+    var randomnum = math.randomInt(1,9999);
+    // add leading zero in front
+    var randomotp = "0000" + randomnum; 
+    randomotp = randomotp.substr(randomotp.length-4);
+    
     var args = {
         data:  "{\
                  \"ref_id\": \"TEST123456#\",\
@@ -1667,15 +1698,124 @@ function GenerateOtp(phoneNumber){
                   }\
                  ]\
                 }",
-        headers: { Authorization: "Basic " + process.env.SMS_AUTHORIZATIONKEY,
+        headers: { Authorization: "Basic " + process.env.SBP_SMS_AUTHORIZATIONKEY,
                    "Content-Type": "application/json"}
     };
     if (process.env.DEVELOPMENT != 1) { // send out real OTP SMS only if production mode
-        restclient.post(process.env.SMS_SENDLINK  + phoneNumber, args, function(data,response) {});
+        restclient.post(process.env.SBP_SMS_SENDURL + phoneNumber, args, function(data,response) {});
     }
     return randomotp;
 }
 
+// Generate OTP using API Gateweay
+function GenerateOtp2(phoneNumber){
+
+    var randomnum = math.randomInt(1,9999);
+    // add leading zero in front for the random OTP
+    var randomotp = "0000" + randomnum; 
+    randomotp = randomotp.substr(randomotp.length-4);    
+    
+    // Token Expired
+    if (ApiGwSmsAuthTokenExpiry < Date.now()) {
+        GetSmsAuthToken();
+    }
+    
+    // Generate unique ID for API Gateway's ID
+    ApiGwSmsCounter++;
+    if (ApiGwSmsCounter>99999) {
+        ApiGwSmsCounter = 0;
+    }
+    var SmsCounter = "00000" + ApiGwSmsCounter; 
+    SmsCounter = SmsCounter.substr(SmsCounter.length-5);    
+
+    var options = {
+        method: 'POST',
+        url: process.env.APIGW_URL + '/notifications/v1/sms/vas',
+        headers: {
+//            'postman-token': 'c5791e8d-ad6f-b1f9-8155-7434571289cb',
+            'cache-control': 'no-cache',
+            'content-type': 'application/json',
+            authorization: 'Bearer '+ ApiGwSmsAuthToken
+        },
+        body: {
+            sourceId: 'EXPLORER',
+            correlationId: 'EXPLOR' + SmsCounter,
+            id: {
+                type: 'MSISDN',
+                value: '6' + phoneNumber,
+            },
+            message: 'RM0.00 Digi Virtual Assistant. Your one time PIN is ' + randomotp + ', valid for the next 3 minutes'
+        },
+        'json': true
+    };
+
+//    if (process.env.DEVELOPMENT != 1) { // send out real OTP SMS only if production mode
+        try {
+            request(options, function (error, response, body) {
+                //console.log('Sent to APIGW '+ JSON.stringify(response));
+            })
+        } catch (e) {
+            //console.log('test2 '+ options);        
+        }
+//    }
+    return randomotp;
+}
+
+function GetSmsAuthToken(){
+    var options = {
+        method: 'POST',
+        url: process.env.APIGW_URL + '/oauth/v1/token',
+        headers: {
+//            'postman-token': '805fa373-aa4d-1a6c-9b18-8e3e75b30336',
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded'
+        },
+        form: {
+            client_id: process.env.APIGW_SMS_AUTH_CLIENT_ID,
+            client_secret: process.env.APIGW_SMS_AUTH_CLIENT_SECRET,
+            grant_type: 'client_credentials',
+            expires_in: '86400'
+        }
+    };
+
+    try {
+        request(options, function (error, response, body) {
+            if (!error) {
+                var ApiGwSmsAuth = JSON.parse(body);
+                if(ApiGwSmsAuth.status == 'approved'){
+                    var ApiGwAuth = JSON.parse(body);
+                    ApiGwSmsAuthToken = ApiGwSmsAuth.accessToken;
+                    ApiGwSmsAuthTokenExpiry = Date.now() + 23*50*60*1000;   // Expire in 24 hours. Renew Token 10 mins before expiry 
+
+                    console.log('Token = ' + ApiGwSmsAuthToken + ' expiry in ' + ApiGwSmsAuthTokenExpiry);            
+                }                
+            }
+        });
+    } catch (e) {        
+    }
+}
+
+
+// R.0.4.1.1 - menu | PrepaidDialog  | MyAccountPrepaid | OneTimeCode | PrepaidAccountOverview
+bot.dialog('PrepaidAccountOverview', [
+    function (session) {
+        builder.Prompts.choice(session, "What can we help you with?", 'Credit Balance|Internet Quota|Talktime Services|Itemized Usage|Reload|Add On', { listStyle: builder.ListStyle.button });
+    },
+    function (session, results) {
+        switch (results.response.index) {
+        case 0: // Credit Balance
+        case 1: // Internet Quota
+        case 2: // Talktime Services
+        case 3: // Itemized Usage
+        case 4: // Reload
+        case 5: // Add On
+            session.send("Coming Soon!!");
+        default:
+            session.send("Sorry, I didn't quite get that.");
+            break;
+        }
+    }
+])
 
 // Connector listener wrapper to capture site url
 var connectorListener = connector.listen();
@@ -1691,3 +1831,67 @@ module.exports = {
     listen: listen,
 };
 
+
+
+
+
+
+//
+//this.props.showTimestamp && (n = this.props.format.strings.timeSent.replace("%1", new Date(this.props.activity.timestamp).toLocaleTimeString())), e = o.createElement("span", null, this.props.activity.from.name || this.props.activity.from.id, n)
+//}
+//var i = this.props.fromMe ? "me" : "bot",
+//    u = a.classList("wc-message-wrapper", this.props.activity.attachmentLayout || "list", this.props.onClickActivity && "clickable"),
+//    c = a.classList("wc-message-content", this.props.selected && "selected");
+//    return 
+//        o.createElement("div", {
+//            "data-activity-id": this.props.activity.id,
+//            className: u,
+//            onClick: this.props.onClickActivity
+//        }, 
+//        o.createElement("div", 
+//            {className: "wc-message wc-message-from-" + i,ref: function (e) { return t.messageDiv = e }}
+//            , o.createElement("div", { className: c},
+//                    o.createElement("svg", {className: "wc-message-callout"}, 
+//                        o.createElement("path", {className: "point-left",d: "m0,6 l6 6 v-12 z"}), 
+//                        o.createElement("path", {className: "point-right",d: "m6,6 l-6 6 v-12 z"})),
+//                    o.createElement(s.ActivityView, r.__assign({}, this.props)), 
+//                    this.props.children
+//            )), 
+//        o.createElement("div", {className: "wc-message-from wc-message-from-" + i}, e)
+//        )
+//    }, t
+//    }(o.Component);
+//    t.WrappedActivity = d
+//    },
+//function (e, t, n) {
+//    "use strict";
+//
+//    function r(e) {
+//        if (e && 0 !== e.length) {
+//            var t = e[e.length - 1];
+//            return "message" === t.type && t.suggestedActions && t.suggestedActions.actions.length > 0 ? t : void 0
+//        }
+//    }
+//    Object.defineProperty(t, "__esModule", {
+//        value: !0
+//    });
+//    var o = n(12),
+//        i = n(9),
+//        s = n(43),
+//        a = n(82),
+//        u = n(17),
+//        c = function (e) {
+//            return i.createElement("div", {
+//                className: u.classList("wc-message-pane", e.activityWithSuggestedActions && "show-actions")
+//            }, e.children, i.createElement("div", {
+//                className: "wc-suggested-actions"
+//            }, i.createElement(l, o.__assign({}, e))))
+//        },
+//        l = function (e) {
+//            function t(t) {
+//                return e.call(this, t) || this
+//            }
+//            return o.__extends(t, e), t.prototype.actionClick = function (e, t) {
+//                    this.props.activityWithSuggestedActions &
+//
+//
