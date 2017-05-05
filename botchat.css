@@ -213,7 +213,8 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
     min-height: 32px;
     width: 300px;      /* modified by Chin 28 Apr 2017 */
     padding: 0 16px;
-    border-radius: 6px; } /* Chin added 28 Apr 2017 */
+    border-radius: 6px;/* Chin added 28 Apr 2017 */
+    font-size: 14px; } /* Chin added 5 May  2017 */
   .wc-card button:hover {
     background-color: #055CB2;    /* modified by Chin 3 May 2017 */
     border-color: #055CB2;        /* modified by Chin 3 May 2017 */
@@ -227,7 +228,7 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
     font-weight: 700; }
   .wc-card h2 {
     color: #808c95;
-    font-size: inherit;
+    font-size: 14px;
     font-weight: normal;
     margin-bottom: 8px; }
   .wc-card p {
@@ -248,7 +249,8 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
     margin: 0px; }        /* modified by Chin 28 Apr 2017 */
   .wc-card.hero img {
     display: block;
-    margin-bottom: 11px; }
+    margin-bottom: 11px; 
+    margin: auto;    }    /* Added by Chin 28 Apr 2017 */
   .wc-card.receipt table {
     border-collapse: collapse;
     width: 100%; }
@@ -399,7 +401,8 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 
 .wc-message-from-bot .wc-message-content {
   background-color: #eceff1;
-  color: #000; }
+  color: #000; 
+  width: 315px; }    /* added by Chin 5 May 2017 */
 
 .wc-message-from-bot svg.wc-message-callout path {
   fill: #eceff1; }
