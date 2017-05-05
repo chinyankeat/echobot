@@ -58,6 +58,12 @@ var bot = new builder.UniversalBot(connector, [
 bot.library(require('./validators').createLibrary());
 // start by getting API Gateway token first
 GetSmsAuthToken();
+
+// Initialize Telemetry Modules
+var telemetryModule = require('./telemetry-module.js'); // Setup for Application Insights
+var appInsights = require('applicationinsights');
+appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY).start();
+var appInsightsClient = appInsights.getClient();
 ////////////////////////////////////////////////////////////////////////////
 
 
@@ -141,7 +147,7 @@ function trackBotEvent(session, description, dialog_state, storeLastMenu) {
         }
     };
 
-    if (process.env.LOGGING) {
+    if (process.env.LOGGING>0) {
         try{
             request(options, function (error, response, body) { // Send to DB if this is Production Environment
                 if (process.env.DEVELOPMENT) {
