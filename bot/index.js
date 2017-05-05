@@ -1900,3 +1900,48 @@ module.exports = {
 //                    this.props.activityWithSuggestedActions &
 //
 //
+
+
+//o.createElement(c.MessagePane, null, o.createElement(u.History, null)), o.createElement(l.Shell, null), i))
+//}, n
+//}(o.Component);
+//t.Chat = p, t.doCardAction = function (e, n, r, o) {
+//    return function (i, s) {
+//        switch (i) {
+//            case "imBack":
+//                s && "string" == typeof s && o(s, n, r);
+//                break;
+//            case "postBack":
+//                t.sendPostBack(e, s, n, r);
+//                break;
+//            case "call":
+//            case "openUrl":
+//            case "playAudio":
+//            case "playVideo":
+//            case "showImage":
+//            case "downloadFile":
+//            case "signin":
+//                window.open(s);
+//                break;
+//            default:
+//                t.konsole.log("unknown button type", i)
+//        }
+////        document.getElementById("wc-shellinput").focus()
+//        var objDiv = document.querySelector('.wc-message-group-content');
+//        objDiv.scrollTop = objDiv.scrollHeight;
+//    }
+//}, t.sendPostBack = function (e, n, r, o) {
+//    e.postActivity({
+//        type: "message",
+//        text: n,
+//        from: r,
+//        locale: o
+//    }).subscribe(function (e) {
+//        t.konsole.log("success sending postBack", e)
+//    }, function (e) {
+//        t.konsole.log("failed to send postBack", e)
+//    })
+//};
+//var f = function (e) {
+//        for (var t = [], n = 0, r = e.length; n < r; n++) {
+//            var o = e[n];
