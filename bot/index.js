@@ -184,7 +184,7 @@ bot.dialog('intro', [
         var respCards = new builder.Message(session)
             .attachments([
                 new builder.HeroCard(session)
-                .title('Hello, I\'m your friendly Digi Virtual Assistant and I\'ll be available from 9pm-12am')
+                .subtitle('Hello, I\'m your friendly Digi Virtual Assistant and I\'ll be available from 9pm-12am')
                 .images([ builder.CardImage.create(session, imagedir + '/images/digi-telecommunications.png') ])
                 ]);
         session.send(respCards);        
