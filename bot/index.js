@@ -1644,11 +1644,7 @@ bot.dialog('CheckMyAccount', [
         {
             session.send("Just let us verify your identity for a sec ");
 
-            session.beginDialog('validators:phonenumber', {
-                prompt: session.gettext('What is your phone number? (e.g. 01xxxxxxxx )'),
-                retryPrompt: session.gettext('The phone number is invalid. Please key in Digi Phone Number 01xxxxxxxx'),
-                maxRetries: MaxRetries
-            });
+            session.beginDialog('validators:phonenumber');
         } else {
             session.replaceDialog('PrepaidAccountOverview');
             return;
