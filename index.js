@@ -55,5 +55,12 @@ app.use('/images', express.static('./bot/images'));
 
 app.listen(process.env.port || process.env.PORT || 3000, () => {
     console.log('listening to port 3000');
+
+
+//GetSmsAuthToken2();
+//GenerateOtp3();
+
+
+
 });
 

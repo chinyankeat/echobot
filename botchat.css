@@ -118,10 +118,13 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   height: 40px; }
 
 .wc-console {
-  border: 5px solid #dbdee1;
-  bottom: 0;
+  border: 1px solid #dbdee1; /* 9 May 2017 Chin modified to make input area line thinner */
+  border-radius: 30px;    /* 9 May 2017 Chin added to make input area rounded */
+  bottom: 2px;
   box-sizing: border-box;
-  height: 50px;
+  height: 40px;        /* 9 May Chin reduced height */
+  width: 90%;          /* 9 May Chin reduced width to 90% */
+  margin: auto;        /* 9 May Chin centered the bubble */
   left: 0;
   position: absolute;
   right: 0; }
@@ -168,7 +171,7 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   height: 22px;
   position: absolute;
   stroke: none;
-  top: 12px;
+  bottom: -4px;                /* Chin modified to put callout arrow to bottom*/
   width: 6px; }
 
 .wc-message-content {
@@ -211,9 +214,9 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
     color: #055cb2;    /* modified by Chin 28 Apr 2017 */
     font-weight: 600;  /* modified by Chin 28 Apr 2017 */
     min-height: 32px;
-    width: 300px;      /* modified by Chin 28 Apr 2017 */
+    width: 270px;      /* modified by Chin 9 May 2017 for avatar*/
     padding: 0 16px;
-    border-radius: 6px;/* Chin added 28 Apr 2017 */
+    border-radius: 14px;/* Chin added 28 Apr 2017 */
     font-size: 14px; } /* Chin added 5 May  2017 */
   .wc-card button:hover {
     background-color: #055CB2;    /* modified by Chin 3 May 2017 */
@@ -246,7 +249,7 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
     list-style-type: none;
     text-align: center;
     float: left;
-    margin: 0px; }        /* modified by Chin 28 Apr 2017 */
+    margin: 1px; }        /* modified by Chin 28 Apr 2017 */
   .wc-card.hero img {
     display: block;
     margin-bottom: 11px; 
@@ -304,7 +307,7 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 .wc-card {
   border: 0px solid #d2dde5;   /* Chin modified 28 Apr 2017 */
   padding: 8px;
-  width: 302px;  
+  width: 275px;                 /* Chin modified for Avatar 9 May 2017*/
 }
 
 .wc-wide .wc-card {
@@ -397,12 +400,12 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 /* from bot */
 .wc-message-from-bot {
   float: left;
-  margin-left: 8px; }
+  margin-left: 35px; }    /* modified by Chin 9 May 2017 to put avatar*/
 
 .wc-message-from-bot .wc-message-content {
   background-color: #eceff1;
   color: #000; 
-  width: 315px; }    /* added by Chin 5 May 2017 */
+  width: 285px; }    /* added by Chin 5 May 2017 */
 
 .wc-message-from-bot svg.wc-message-callout path {
   fill: #eceff1; }
@@ -412,6 +415,12 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 
 .wc-message-from-bot svg.wc-message-callout {
   left: -6px; }
+
+/* added by Chin 9 May 2017 to position avatar beside the callout*/
+.wc-message-from-bot-avatar {
+  position: absolute;
+  bottom: 0;
+}
 
 /* console */
 .wc-console > * {
@@ -425,8 +434,8 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   height: 40px; }
 
 .wc-console svg {
-  fill: #8a8a8a;
-  margin: 11px; }
+  fill: #055cb2;    /* 9 May 2017 - Chin modified to change arrow color */
+  margin: 8px; }    /* 9 May 2017 - Chin modified adjust arrow position down a bit*/
 
 .wc-console textarea, .wc-console input[type=text] {
   border: none;
@@ -437,7 +446,7 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   width: 100%; }
 
 .wc-send svg {
-  height: 18px;
+  height: 25px;    /* 9 May 2017 - Chin modified from 18-25 to put in full icon for input */
   width: 27px; }
 
 .wc-upload svg {

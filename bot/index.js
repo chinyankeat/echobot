@@ -57,13 +57,22 @@ var bot = new builder.UniversalBot(connector, [
 // Require Functions
 bot.library(require('./validators').createLibrary());
 // start by getting API Gateway token first
-GetSmsAuthToken();
+//GetSmsAuthToken();
 
 // Initialize Telemetry Modules
 var telemetryModule = require('./telemetry-module.js'); // Setup for Application Insights
 var appInsights = require('applicationinsights');
-appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY).start();
-var appInsightsClient = appInsights.getClient();
+var appInsightsClient = 0;
+InitializeAppInsights();
+
+function InitializeAppInsights(){
+    try {
+        appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY).start();
+        appInsightsClient = appInsights.getClient();
+    } catch (e) {
+        console.log("Not connecting to AppInsights");
+    }
+}
 ////////////////////////////////////////////////////////////////////////////
 
 
@@ -182,6 +191,7 @@ bot.use({
 bot.dialog('intro', [
     function (session) {
         // Initialize Session Data
+        session.sendTyping();
         session.privateConversationData[NumOfFeedback] = 0;
         session.privateConversationData[DialogId] = session.message.address.id;
 
@@ -242,6 +252,7 @@ bot.dialog('Feedback', [
 // R - menu
 bot.dialog('menu2', [
     function (session) {
+        session.sendTyping();
         trackBotEvent(session, 'menu', 0);
         
         // Store new unique ID for this conversation's Dialog
@@ -286,6 +297,7 @@ bot.dialog('menu2', [
 // R.0 - menu|Prepaid
 bot.dialog('Prepaid', [
     function (session) {
+        session.sendTyping();
         trackBotEvent(session, 'menu|Prepaid',1);
         
         session.send("What would you like to find out today?");
@@ -334,6 +346,7 @@ bot.dialog('Prepaid', [
 // R.0.0 - menu|Prepaid|PrepaidPlans
 bot.dialog('PrepaidPlans', [
     function (session) {
+        session.sendTyping();
         trackBotEvent(session, 'menu|Prepaid|PrepaidPlans',1);
 
         session.send("Here are our plans");
@@ -1771,7 +1784,6 @@ function GetSmsAuthToken(){
         method: 'POST',
         url: process.env.APIGW_URL + '/oauth/v1/token',
         headers: {
-//            'postman-token': '805fa373-aa4d-1a6c-9b18-8e3e75b30336',
             'cache-control': 'no-cache',
             'content-type': 'application/x-www-form-urlencoded'
         },
@@ -1800,6 +1812,82 @@ function GetSmsAuthToken(){
     }
 }
 
+// get auth token using ChatbotIod
+function GetSmsAuthToken2(){
+    var options = {
+        method: 'GET',
+        url: 'http://localhost:8080/demo/api/apigwtoken/',
+        headers: {
+            'cache-control': 'no-cache',
+            authorization: 'Basic YmlsbDphYmMxMjM='
+        }
+    };
+    try {
+        request(options, function (error, response, body) {
+            if (!error) {
+                var ApiGwSmsAuth = JSON.parse(body);
+                if(ApiGwSmsAuth.status == 'approved'){
+                    var ApiGwAuth = JSON.parse(body);
+                    var ApiGwSmsAuthToken = ApiGwSmsAuth.accessToken;
+                    var ApiGwSmsAuthTokenExpiry = Date.now() + 23*50*60*1000;   // Expire in 24 hours. Renew Token 10 mins before expiry 
+
+                    console.log('Token = ' + ApiGwSmsAuthToken + ' expiry in ' + ApiGwSmsAuthTokenExpiry);            
+                }                
+            } else {
+            }
+        });
+    } catch (e) {        
+    }
+}
+
+// Generate OTP using API Gateweay
+function GenerateOtp3(phoneNumber){
+
+    var randomnum = math.randomInt(1,9999);
+    // add leading zero in front for the random OTP
+    var randomotp = "0000" + randomnum; 
+    randomotp = randomotp.substr(randomotp.length-4);    
+    
+    // Token Expired
+    if (ApiGwSmsAuthTokenExpiry < Date.now()) {
+        GetSmsAuthToken();
+    }
+    
+    // Generate unique ID for API Gateway's ID
+    ApiGwSmsCounter++;
+    if (ApiGwSmsCounter>99999) {
+        ApiGwSmsCounter = 0;
+    }
+    var SmsCounter = "00000" + ApiGwSmsCounter; 
+    SmsCounter = SmsCounter.substr(SmsCounter.length-5);    
+
+    var options = {
+        method: 'POST',
+        url: 'http://localhost:8080/demo/api/apigwsendsms/',
+        headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/json',
+            authorization: 'Bearer ' + ApiGwSmsAuthToken
+        },
+        body: {
+            msisdn: '6' + phoneNumber,
+            authorizationToken: ApiGwSmsAuthToken,
+            message: 'RM0.00 Digi Virtual Assistant. Your one time PIN is ' + randomotp + ', valid for the next 3 minutes'
+        },
+        json: true
+    };
+
+//    if (process.env.DEVELOPMENT != 1) { // send out real OTP SMS only if production mode
+        try {
+            request(options, function (error, response, body) {
+                //console.log('Sent to APIGW '+ JSON.stringify(response));
+            })
+        } catch (e) {
+            //console.log('test2 '+ options);        
+        }
+//    }
+    return randomotp;
+}
 
 // R.0.4.1.1 - menu | PrepaidDialog  | MyAccountPrepaid | OneTimeCode | PrepaidAccountOverview
 bot.dialog('PrepaidAccountOverview', [
