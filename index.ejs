@@ -12,11 +12,10 @@
             <div style="clear:both;"/>
         </div>
 
-        <script src="botchat.js"></script>
+        <script src="botchat-full.js"></script>
         <script>
             var now = new Date();
 
-            
             // display offline page, if requested to
             <%if (process.env.OFFLINE == '1') { %>
                 window.location.replace("http://bot.digi.com.my/offline.html");

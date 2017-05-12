@@ -1,7 +1,7 @@
 /* reset */
 body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   font-family: 'Segoe UI', sans-serif;
-  font-size: 16px; }    /* modified by Chin 28 Apr 2017 */
+  font-size: 15px; }    /* modified by Chin 28 Apr 2017 */
 
 .wc-app button {
   background-color: #FFE227;
@@ -208,30 +208,30 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 /* cards */
 .wc-card {
   background-color: rgba(255, 255, 255, 0); /* modified by Chin 3 May 2017 */
-  font-size: 13px; }
+  font-size: 15px; }
   .wc-card button {
     background-color: #FFFFFF;    /* modified by Chin 3 May 2017 */
-    color: #055cb2;    /* modified by Chin 28 Apr 2017 */
+    color: #0073de;    /* modified by Chin 28 Apr 2017 */
     font-weight: 600;  /* modified by Chin 28 Apr 2017 */
     min-height: 32px;
     width: 270px;      /* modified by Chin 9 May 2017 for avatar*/
     padding: 0 16px;
-    border-radius: 14px;/* Chin added 28 Apr 2017 */
+    border-radius: 10px;/* Chin added 28 Apr 2017 */
     font-size: 14px; } /* Chin added 5 May  2017 */
   .wc-card button:hover {
-    background-color: #055CB2;    /* modified by Chin 3 May 2017 */
-    border-color: #055CB2;        /* modified by Chin 3 May 2017 */
+    background-color: #0073de;    /* modified by Chin 3 May 2017 */
+    border-color: #0073de;        /* modified by Chin 3 May 2017 */
     color: #FFFFFF; }             /* modified by Chin 3 May 2017 */
   .wc-card button:active {
-    background-color: #3a96dd;
-    border-color: #3a96dd;
+    background-color: #0073de;
+    border-color: #0073de;
     color: #fff; }
   .wc-card h1 {
     font-size: 15px;
     font-weight: 700; }
   .wc-card h2 {
-    color: #808c95;
-    font-size: 14px;
+    color: #000000;
+    font-size: 15px;
     font-weight: normal;
     margin-bottom: 8px; }
   .wc-card p {
@@ -253,6 +253,7 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   .wc-card.hero img {
     display: block;
     margin-bottom: 11px; 
+    padding-bottom: 10px;
     margin: auto;    }    /* Added by Chin 28 Apr 2017 */
   .wc-card.receipt table {
     border-collapse: collapse;
@@ -349,23 +350,24 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 .wc-carousel {
   position: relative; }
   .wc-carousel button.scroll {
-    background-color: #000000;    /* Modified by Chin 3 May 2017 */
+    background-color: #FFE227;    /* Modified by Chin 3 May 2017 */
     height: 28px;
     overflow: hidden;
     padding: 0;
     position: absolute;
     top: 50%;
-    width: 28px; }
+    width: 28px; 
+    border: 0px;}
   .wc-carousel button.scroll:disabled {
     display: none; }
   .wc-carousel button.scroll:hover {
-    background-color: #808c95; }
+    background-color: #0073de; }
   .wc-carousel button.scroll svg {
     fill: #fff; }
   .wc-carousel button.scroll.previous {
-    left: -16px; }
+    left: -25px; }
   .wc-carousel button.scroll.next {
-    right: -16px; }
+    right: -25px; }
   .wc-carousel .wc-hscroll > ul {
     margin-left: -4px; }
   .wc-carousel .wc-hscroll > ul > li {
@@ -385,11 +387,11 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   text-align: right; }
 
 .wc-message-from-me .wc-message-content {
-  background-color: #FFE227;
-  color: #000; }
+  background-color: #0073de;
+  color: #FFFFFF; }
 
 .wc-message-from-me svg.wc-message-callout path {
-  fill: #FFE227; }
+  fill: rgba(0, 115, 222, 0); }
 
 .wc-message-from-me svg.wc-message-callout path.point-left {
   display: none; }
@@ -434,7 +436,7 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   height: 40px; }
 
 .wc-console svg {
-  fill: #055cb2;    /* 9 May 2017 - Chin modified to change arrow color */
+  fill: #0073de;    /* 9 May 2017 - Chin modified to change arrow color */
   margin: 8px; }    /* 9 May 2017 - Chin modified adjust arrow position down a bit*/
 
 .wc-console textarea, .wc-console input[type=text] {
