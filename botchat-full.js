@@ -957,7 +957,7 @@
                         className: "wc-header"
                     }, 
                         o.createElement("img", {className: "wc-header-icon",src: 'https://yellowchat.azurewebsites.net/images/digi-avatar.png',onLoad: e.onImageLoad}),
-                        o.createElement("span", {className: "wc-header-text"}, n.format.strings.title),
+                        o.createElement("span", {className: "wc-header-text"}, "Virtual Assistant"/*n.format.strings.title*/),
                         o.createElement("span", {className: "wc-header-menu"}, "Main Menu")));
                     var i;
                     return "detect" === this.props.resize && (i = o.createElement(d, {
