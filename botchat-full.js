@@ -955,7 +955,10 @@
                     var r;
                     n.format.options.showHeader && (r = o.createElement("div", {
                         className: "wc-header"
-                    }, o.createElement("span", null, n.format.strings.title)));
+                    }, 
+                        o.createElement("img", {className: "wc-header-icon",src: 'https://yellowchat.azurewebsites.net/images/digi-avatar.png',onLoad: e.onImageLoad}),
+                        o.createElement("span", {className: "wc-header-text"}, n.format.strings.title),
+                        o.createElement("span", {className: "wc-header-menu"}, "Main Menu")));
                     var i;
                     return "detect" === this.props.resize && (i = o.createElement(d, {
                         onresize: this.resizeListener
@@ -6026,7 +6029,9 @@ o.createElement("img", {className:"wc-message-from-bot-avatar",src: this.props.f
                         t = "wc-console";
                     return this.props.inputText.length > 0 && (t += " has-text"), o.createElement("div", {
                         className: t
-                    }, /*o.createElement("input",{id:"wc-upload-input",type:"file",ref:function(t){return e.fileInput=t},multiple:!0,onChange:function(){return e.onChangeFile()}}),o.createElement("label",{className:"wc-upload",htmlFor:"wc-upload-input"},o.createElement("svg",null,o.createElement("path",{d:"M19.96 4.79m-2 0a2 2 0 0 1 4 0 2 2 0 0 1-4 0zM8.32 4.19L2.5 15.53 22.45 15.53 17.46 8.56 14.42 11.18 8.32 4.19ZM1.04 1L1.04 17 24.96 17 24.96 1 1.04 1ZM1.03 0L24.96 0C25.54 0 26 0.45 26 0.99L26 17.01C26 17.55 25.53 18 24.96 18L1.03 18C0.46 18 0 17.55 0 17.01L0 0.99C0 0.45 0.47 0 1.03 0Z"}))),*** Commented out by Chin to disable file upload funcion*** */ o.createElement("div", {
+                    }, 
+                    /*o.createElement("input",{id:"wc-upload-input",type:"file",ref:function(t){return e.fileInput=t},multiple:!0,onChange:function(){return e.onChangeFile()}}),o.createElement("label",{className:"wc-upload",htmlFor:"wc-upload-input"},o.createElement("svg",null,o.createElement("path",{d:"M19.96 4.79m-2 0a2 2 0 0 1 4 0 2 2 0 0 1-4 0zM8.32 4.19L2.5 15.53 22.45 15.53 17.46 8.56 14.42 11.18 8.32 4.19ZM1.04 1L1.04 17 24.96 17 24.96 1 1.04 1ZM1.03 0L24.96 0C25.54 0 26 0.45 26 0.99L26 17.01C26 17.55 25.53 18 24.96 18L1.03 18C0.46 18 0 17.55 0 17.01L0 0.99C0 0.45 0.47 0 1.03 0Z"}))),*** Commented out by Chin to disable file upload funcion*** */ 
+                    o.createElement("div", {
                         className: "wc-textbox"
                     }, o.createElement("input", {
                         type: "text",
