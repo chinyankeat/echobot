@@ -1665,7 +1665,7 @@ bot.dialog('ChangeBillingCycle', [
 
 bot.dialog('getFeedback', [
     function (session) {
-        builder.Prompts.choice(session, emoji.emojify("We would appreciate your feedback. How would you rate our Virtual Assistant? \n(1)not able to help me, (5)very useful"), emoji.emojify('1|2|3|4|5'), { listStyle: builder.ListStyle.button });
+        builder.Prompts.choice(session, emoji.emojify("We would appreciate your feedback. How would you rate our Virtual Assistant? \n(1)not able to help me, (5)very useful"), emoji.emojify('★|★★|★★★|★★★★|★★★★★'), { listStyle: builder.ListStyle.button });
     },
     function (session, results) {
         switch (results.response.index) {

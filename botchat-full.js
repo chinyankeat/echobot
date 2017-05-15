@@ -954,11 +954,11 @@
                     t.konsole.log("BotChat.Chat state", n);
                     var r;
                     n.format.options.showHeader && (r = o.createElement("div", {
-                        className: "wc-header"
+                        className: "wc-header", id: "start-over-menu"       // added id menu
                     }, 
                         o.createElement("img", {className: "wc-header-icon",src: 'https://yellowchat.azurewebsites.net/images/digi-avatar.png',onLoad: e.onImageLoad}),
-                        o.createElement("span", {className: "wc-header-text"}, "Virtual Assistant"/*n.format.strings.title*/),
-                        o.createElement("span", {className: "wc-header-menu"}, "Main Menu")));
+                        o.createElement("span", {className: "wc-header-text"}, "Virtual Assistant"/*n.format.strings.title*/)
+                        ));
                     var i;
                     return "detect" === this.props.resize && (i = o.createElement(d, {
                         onresize: this.resizeListener
@@ -5799,7 +5799,11 @@
                         ref: function (t) {
                             return e.scrollContent = t
                         }
-                    }, t))
+                    }, o.createElement("img", { className: "wc-intro-logo",src: 'http://new.digi.com.my/cs/site_template/digi/images/digi-telecommunications.png'})
+
+// Yan Keat: this is added to put in the typing icon
+//                    , o.createElement("div", { className: "wc-typing loading"})
+                    ,t))
                 }, t
             }(o.Component);
         t.HistoryView = u, t.History = i.connect(function (e) {
@@ -5894,9 +5898,20 @@
                             var n = void 0;
                             this.props.showTimestamp && (n = this.props.format.strings.timeSent.replace("%1", new Date(this.props.activity.timestamp).toLocaleTimeString())), e = o.createElement("span", null, this.props.activity.from.name || this.props.activity.from.id, n)
                     }
+
                     var i = this.props.fromMe ? "me" : "bot",
                         u = a.classList("wc-message-wrapper", this.props.activity.attachmentLayout || "list", this.props.onClickActivity && "clickable"),
                         c = a.classList("wc-message-content", this.props.selected && "selected");
+
+if(!this.props.fromMe){
+    var elements = document.getElementsByClassName('wc-typing');
+    while(elements.length > 0){
+        elements[0].classList.remove('wc-typing');
+    }
+}
+                                           
+                    
+                    
                     return o.createElement("div"
                     , {
                         "data-activity-id": this.props.activity.id,
@@ -5908,7 +5923,6 @@
 //o.createElement("div", {className: "wc-message-from wc-message-from-" + i}, e),
 // uncomment  these code to add avatar
 o.createElement("img", {className:"wc-message-from-bot-avatar",src: this.props.fromMe?'':'https://yellowchat.azurewebsites.net/images/digi-avatar.png',onLoad: e.onImageLoad}),
-
                        o.createElement("div", {
                         className: "wc-message wc-message-from-" + i,
                         ref: function (e) {
@@ -6022,18 +6036,34 @@ o.createElement("img", {className:"wc-message-from-bot-avatar",src: this.props.f
                     "Enter" === e.key && this.sendMessage()
                 }, t.prototype.onClickSend = function () {
                     this.textInput.focus(), this.sendMessage()
+                }, t.prototype.onClickHome = function () {  //  added code here to trigger Main Menu
+                    this.props.sendMessage("Main Menu")
                 }, t.prototype.onChangeFile = function () {
                     this.textInput.focus(), this.props.sendFiles(this.fileInput.files), this.fileInput.value = null
                 }, t.prototype.render = function () {
                     var e = this,
                         t = "wc-console";
+                    
+                    var newTH = document.createElement('button');
+                    newTH.className = 'wc-header-menu';
+                    newTH.innerHTML = 'Main Menu';
+                    newTH.onclick = function () {
+                        return e.onClickHome()
+                    };
+                    
+                    var element = document.getElementById("start-over-menu");
+                    if(element) { 
+                        element.appendChild(newTH);
+                    }
+
                     return this.props.inputText.length > 0 && (t += " has-text"), o.createElement("div", {
                         className: t
                     }, 
                     /*o.createElement("input",{id:"wc-upload-input",type:"file",ref:function(t){return e.fileInput=t},multiple:!0,onChange:function(){return e.onChangeFile()}}),o.createElement("label",{className:"wc-upload",htmlFor:"wc-upload-input"},o.createElement("svg",null,o.createElement("path",{d:"M19.96 4.79m-2 0a2 2 0 0 1 4 0 2 2 0 0 1-4 0zM8.32 4.19L2.5 15.53 22.45 15.53 17.46 8.56 14.42 11.18 8.32 4.19ZM1.04 1L1.04 17 24.96 17 24.96 1 1.04 1ZM1.03 0L24.96 0C25.54 0 26 0.45 26 0.99L26 17.01C26 17.55 25.53 18 24.96 18L1.03 18C0.46 18 0 17.55 0 17.01L0 0.99C0 0.45 0.47 0 1.03 0Z"}))),*** Commented out by Chin to disable file upload funcion*** */ 
                     o.createElement("div", {
                         className: "wc-textbox"
-                    }, o.createElement("input", {
+                    }, 
+                    o.createElement("input", {
                         type: "text",
                         id: "wc-shellinput",
                         ref: function (t) {
