@@ -618,7 +618,7 @@ bot.dialog('Roaming', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Roaming)/i
+    matches: /(Roaming)|(roam)/i
 });
 
 // R.3.0 - menu|Roaming|RoamingPlans
@@ -1023,7 +1023,7 @@ bot.dialog('AllAboutMyAccount', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(About My Account)/i
+    matches: /(About My Account)|(account)/i
 });
 
 // R.4.0.0 - menu|FrequentlyAskedQuestion|AllAboutMyAccount|GetAccountNo
@@ -1078,7 +1078,7 @@ bot.dialog('WhatIsMyPuk', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(What Is My Puk)|(What is my PUK code)/i
+    matches: /(What Is My Puk)|(What is my PUK code)|(puk)/i
 });
 
 // R.4.0.2 - menu|FrequentlyAskedQuestion|AllAboutMyAccount|ChangeMyAccOwnership
