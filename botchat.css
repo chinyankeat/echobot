@@ -4,13 +4,13 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   font-size: 15px; }    /* modified by Chin 28 Apr 2017 */
 
 .wc-app button {
-  background-color: #FFE227;
-  border: 1px solid #055cb2;    /* modified by Chin 3 May 2017 */
+  background-color: #FFFFFF;
+  border: 1px solid #0073de;    /* modified by Chin 3 May 2017 */
   border-radius: 6px;    /* chin modified 28 Apr 2017 */
-  color: #000;
+  color: #0073de;
   cursor: pointer;
   outline: none;
-  transition: color .2s ease, background-color .2s ease; }
+  transition: color .3s ease, background-color .3s ease; }
 
 .wc-app h1, .wc-app h2, .wc-app h3, .wc-app h4, .wc-app p, .wc-app ul, .wc-app ol {
   margin: 0;
@@ -49,6 +49,21 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 .wc-header-menu {
   float: right;
 }
+.wc-header-menu:hover {
+  float: right;
+  background-color: #0073de;
+  color: #FFFFFF;
+}
+.wc-loading-container {
+  position: relative;
+}
+.wc-loading-container-typing {
+  display: block;
+  position: absolute;
+  top: 8px;
+  left: 40px;
+}
+
 .wc-time {
   color: #999;
   margin-bottom: 10px; }
@@ -69,7 +84,13 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   margin: auto;
   display: block;
   width: 40%;
+}
+
+.wc-intro-name {
+  text-align: center;
+  font-size: 23px;
   margin-bottom: 20px;
+  font-weight: 100;
 }
 
 .wc-message-group-content {

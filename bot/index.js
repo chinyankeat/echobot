@@ -91,7 +91,7 @@ bot.on('conversationUpdate', function (message) {
         message.membersAdded.forEach(function (identity) {
             if (identity.id === message.address.bot.id) {
                 console.log("identity Added " + identity.id + " Message " + message.address.bot.id + " " + message.address.conversation.id);
-                bot.beginDialog(message.address, 'intro');
+//                bot.beginDialog(message.address, 'intro');
             }
         });
     }
@@ -105,7 +105,7 @@ bot.on('conversationUpdate', function (message) {
 
 // Wrapper function for logging
 function trackBotEvent(session, description, dialog_state, storeLastMenu) {
-    session.send({ type: 'typing' });   // Send typing to all menu
+//    session.send({ type: 'typing' });   // Send typing to all menu
 
     // log session.message.address to identify user 
     //var address = JSON.stringify(session.message.address); session.send("User Address=" + address);
@@ -333,7 +333,7 @@ bot.dialog('Prepaid', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Prepaid)/
+    matches: /(Prepaid)/i
 });
 
 // R.0.0 - menu|Prepaid|PrepaidPlans

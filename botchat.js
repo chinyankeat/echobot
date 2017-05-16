@@ -5796,13 +5796,20 @@
                         }
                     }, o.createElement("div", {
                         className: "wc-message-group-content",
+						id: "wc-message-group-content-id",
                         ref: function (t) {
                             return e.scrollContent = t
                         }
-                    }, o.createElement("img", { className: "wc-intro-logo",src: 'http://new.digi.com.my/cs/site_template/digi/images/digi-telecommunications.png'})
+                    }, o.createElement("img", { className: "wc-intro-logo",src: 'http://bot.digi.com.my/images/start-logo.PNG'})
 
-// Yan Keat: this is added to put in the typing icon
-//                    , o.createElement("div", { className: "wc-typing loading"})
+				   	, o.createElement("div", { className: "wc-intro-name"},"HELLO")
+
+					// Yan Keat: this is added to put in the typing icon
+                    , o.createElement("div", { id: "wc-loading-container-id", className:"wc-loading-container" }
+						, o.createElement("img", { src:'http://bot.digi.com.my/images/typingstatus.png'})
+						, o.createElement("div", { className: "wc-typing wc-loading-container-typing"})
+					)
+
                     ,t))
                 }, t
             }(o.Component);
@@ -5903,14 +5910,12 @@
                         u = a.classList("wc-message-wrapper", this.props.activity.attachmentLayout || "list", this.props.onClickActivity && "clickable"),
                         c = a.classList("wc-message-content", this.props.selected && "selected");
 
-if(!this.props.fromMe){
-    var elements = document.getElementsByClassName('wc-typing');
-    while(elements.length > 0){
-        elements[0].classList.remove('wc-typing');
-    }
-}
-                                           
-                    
+//if(!this.props.fromMe){
+//alert("time to clear typing");
+////    var elements = document.getElementsByClassName('wc-typing');
+////    while(elements.length > 0){
+////        elements[0].classList.remove('wc-typing');
+//}
                     
                     return o.createElement("div"
                     , {
@@ -5922,7 +5927,16 @@ if(!this.props.fromMe){
 // uncomment  these code to put the Virtual Agent name on top instead of bellow
 //o.createElement("div", {className: "wc-message-from wc-message-from-" + i}, e),
 // uncomment  these code to add avatar
-o.createElement("img", {className:"wc-message-from-bot-avatar",src: this.props.fromMe?'':'https://yellowchat.azurewebsites.net/images/digi-avatar.png',onLoad: e.onImageLoad}),
+//o.createElement("img", {className:"wc-message-from-bot-avatar",src: this.props.fromMe?'':'https://yellowchat.azurewebsites.net/images/digi-avatar.png',onLoad: e.onImageLoad}),
+o.createElement("img", {className:"wc-message-from-bot-avatar",src: this.props.fromMe?'':'https://yellowchat.azurewebsites.net/images/digi-avatar.png',onLoad: function(){
+	var elements = document.getElementById('wc-loading-container-id');
+	if(elements){
+		elements.parentNode.removeChild(elements);
+	}
+}}),
+										   
+										   
+										   
                        o.createElement("div", {
                         className: "wc-message wc-message-from-" + i,
                         ref: function (e) {
@@ -6045,6 +6059,7 @@ o.createElement("img", {className:"wc-message-from-bot-avatar",src: this.props.f
                         t = "wc-console";
                     
                     var newTH = document.createElement('button');
+					newTH.id = 'wc-header-menu-id';
                     newTH.className = 'wc-header-menu';
                     newTH.innerHTML = 'Main Menu';
                     newTH.onclick = function () {
@@ -6052,7 +6067,8 @@ o.createElement("img", {className:"wc-message-from-bot-avatar",src: this.props.f
                     };
                     
                     var element = document.getElementById("start-over-menu");
-                    if(element) { 
+                    var header_menu_element = document.getElementById("wc-header-menu-id");
+                    if(element && header_menu_element==null) { 
                         element.appendChild(newTH);
                     }
 
@@ -6240,7 +6256,29 @@ o.createElement("img", {className:"wc-message-from-bot-avatar",src: this.props.f
                             return e.from.id !== t.activity.from.id && "typing" === e.type
                         }))
                     });
-                case "Send_Message":
+                case "Send_Message": {
+////alert ("sending message");
+//e.handleIncomingActivity(Object('{ "activities": [ {"type": "typing","id": "4NuISsqNMqXgzpO4iKH18|B2auDTZh980","timestamp": "2017-05-16T03:53:40.5456507Z","localTimestamp": "2017-05-16T03:53:38.237+00:00","channelId": "directline","from": {"id": "yellow","name": "Virtual Assistant"},"conversation": {"id": "4NuISsqNMqXgzpO4iKH18"},"locale": "en-US","replyToId": "4NuISsqNMqXgzpO4iKH18|0000004"}]}'));
+
+					// Chin Added codes below to add ... typing
+                    var newTypingContainer = document.createElement("div");
+					newTypingContainer.id = 'wc-loading-container-id';
+                    newTypingContainer.className = 'wc-loading-container';
+
+					var newTyping = document.createElement("div");
+                    newTyping.className = 'wc-typing wc-loading-container-typing';
+					
+					var newTypingImg = document.createElement("IMG");
+					newTypingImg.setAttribute("src", "http://bot.digi.com.my/images/typingstatus.png");
+					
+					newTypingContainer.appendChild(newTyping);
+					newTypingContainer.appendChild(newTypingImg);
+					
+                    var element = document.getElementById("wc-message-group-content-id");
+                    if(element) { 
+                        element.appendChild(newTypingContainer);
+                    }
+					
                     return r.__assign({}, e, {
                         activities: e.activities.filter(function (e) {
                             return "typing" !== e.type
@@ -6254,6 +6292,7 @@ o.createElement("img", {className:"wc-message-from-bot-avatar",src: this.props.f
                         })),
                         clientActivityCounter: e.clientActivityCounter + 1
                     });
+				}
                 case "Send_Message_Retry":
                     var s = e.activities.find(function (e) {
                             return e.channelData && e.channelData.clientActivityId === t.clientActivityId
