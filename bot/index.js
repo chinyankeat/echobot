@@ -91,7 +91,7 @@ bot.on('conversationUpdate', function (message) {
         message.membersAdded.forEach(function (identity) {
             if (identity.id === message.address.bot.id) {
                 console.log("identity Added " + identity.id + " Message " + message.address.bot.id + " " + message.address.conversation.id);
-//                bot.beginDialog(message.address, 'intro');
+                bot.beginDialog(message.address, 'intro');
             }
         });
     }

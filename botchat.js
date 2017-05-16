@@ -5798,18 +5798,18 @@
                         className: "wc-message-group-content",
 						id: "wc-message-group-content-id",
                         ref: function (t) {
-                            return e.scrollContent = t
+                            return e.scrollContent = t;
                         }
                     }, o.createElement("img", { className: "wc-intro-logo",src: 'http://bot.digi.com.my/images/start-logo.PNG'})
 
 				   	, o.createElement("div", { className: "wc-intro-name"},"HELLO")
 
 					// Yan Keat: this is added to put in the typing icon
-                    , o.createElement("div", { id: "wc-loading-container-id", className:"wc-loading-container" }
+                    , o.createElement("div", { id: "wc-loading-container-id", className:"wc-loading-container"}
 						, o.createElement("img", { src:'http://bot.digi.com.my/images/typingstatus.png'})
-						, o.createElement("div", { className: "wc-typing wc-loading-container-typing"})
+						, o.createElement("div", { className: "wc-typing wc-loading-container-typing", })
 					)
-
+					, o.createElement("div", { style :{"margin-top":"150px"} })
                     ,t))
                 }, t
             }(o.Component);
