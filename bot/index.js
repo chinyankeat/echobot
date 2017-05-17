@@ -205,7 +205,7 @@ bot.dialog('intro', [
 
         trackBotEvent(session, 'intro', 0);
         
-        session.send("Hello, I\'m your friendly Digi Virtual Assistant and I\'ll be available from 9pm-12am.");
+        session.send("I\'m your friendly Digi Virtual Assistant and I\'ll be available from 9pm-12am.");
 		
         var respCards = new builder.Message(session)
             .attachmentLayout(builder.AttachmentLayout.carousel)
@@ -278,7 +278,7 @@ bot.dialog('ContactCustomerService', [
 					.text('Digi Live Chat service is available from 10am to 9pm')
 					.buttons([
 						builder.CardAction.openUrl(session, 'https://community.digi.com.my/', 'Digi Community Website'),
-						builder.CardAction.openUrl(session, 'https://community.digi.com.my/', 'Digi Live Chat'),
+						builder.CardAction.openUrl(session, 'http://new.digi.com.my/webchat', 'Digi Live Chat'),
 					])
 				]);
 		}

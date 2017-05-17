@@ -536,7 +536,8 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 
 /* text formats */
 .format-markdown > p {
-  margin-bottom: 0px; }
+  margin-bottom: 0px; 
+  margin-left: 15px;}
 
 .format-markdown code {
   white-space: pre-wrap; }

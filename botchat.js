@@ -5808,7 +5808,7 @@
                     , o.createElement("div", { id: "wc-loading-container-id", className:"wc-loading-container"}
 						, o.createElement("img", { src:'http://bot.digi.com.my/images/typingstatus.png'})
 						, o.createElement("div", { className: "wc-typing wc-loading-container-typing", })
-						, o.createElement("div", { style :{"margin-top":"150px"} })
+						, o.createElement("div", { style :{"margin-top":"170px"} })
 					)
                     ,t))
                 }, t
