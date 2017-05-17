@@ -206,8 +206,22 @@ bot.dialog('intro', [
         trackBotEvent(session, 'intro', 0);
         
         session.send("Hello, I\'m your friendly Digi Virtual Assistant and I\'ll be available from 9pm-12am.");
-        session.send("You can ask me (almost) anything about Digi\'s products. ");
-        session.replaceDialog('menu');        
+		
+        var respCards = new builder.Message(session)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+                new builder.HeroCard(session)
+                .text('You can ask me (almost) anything about Digi\'s products.')
+                .buttons([
+                    builder.CardAction.imBack(session, "Let's get started", "Let's get started"),
+                    builder.CardAction.imBack(session, "Contact our Customer Service", "Contact our Customer Service")
+                ])
+            ]);
+        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
+    },
+    function (session, results) {
+        session.send(DefaultMaxRetryErrorPrompt);
+        session.replaceDialog('menu');
     }
 ]);
 
@@ -225,16 +239,56 @@ bot.dialog('menu', [
         }
     }
 ]).triggerAction({
-    matches: /^(main menu)|(menu)|(begin)$/i
+    matches: /^(main menu)|(menu)|(begin)|(Let\'s get started)$/i
 });
 
 bot.dialog('byemenu', [
     function (session) {
         session.send("Bye for now.");
-        session.replaceDialog('menu2');
+        session.send("Thanks for using Yellow");
+        session.send("You can always press \"Main Menu\" button above to start over");
             }
 ]).triggerAction({
     matches: /^(exit)|(quit)|(depart)|(bye)|(goodbye)$/i
+});
+
+
+bot.dialog('ContactCustomerService', [
+    function (session) {
+		
+		var now = new Date();
+
+		session.send('You can reach Digi via our Community website, Live Chat or Email us at help@digi.com.my ');
+		if(now.getHours()>9 && now.getHours()<21) {         //WHITELIST 9pm-12pm for chatbot
+        var respCards = new builder.Message(session)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+                new builder.HeroCard(session)
+                .text('Digi Live Chat service is available from 10am to 9pm')
+                .buttons([
+                    builder.CardAction.openUrl(session, 'https://community.digi.com.my/', 'Digi Community Website'),
+                ])
+            ]);
+
+		} else {
+			var respCards = new builder.Message(session)
+				.attachmentLayout(builder.AttachmentLayout.carousel)
+				.attachments([
+					new builder.HeroCard(session)
+					.text('Digi Live Chat service is available from 10am to 9pm')
+					.buttons([
+						builder.CardAction.openUrl(session, 'https://community.digi.com.my/', 'Digi Community Website'),
+						builder.CardAction.openUrl(session, 'https://community.digi.com.my/', 'Digi Live Chat'),
+					])
+				]);
+		}
+        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle: builder.ListStyle.button });
+    },
+    function (session, results) {
+        session.replaceDialog('menu');
+    }		
+]).triggerAction({
+    matches: /(Customer Service)|(email)/i
 });
 
 bot.dialog('Feedback', [
@@ -333,7 +387,7 @@ bot.dialog('Prepaid', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Prepaid)/i
+    matches: /(Prepaid)|(reload)/i
 });
 
 // R.0.0 - menu|Prepaid|PrepaidPlans
@@ -411,7 +465,7 @@ bot.dialog('Postpaid', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Postpaid)/i
+    matches: /(Postpaid)|(postpaid extra)/i
 });
 
 // R.1.0 - menu|Postpaid|PostpaidPlans

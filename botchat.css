@@ -418,6 +418,8 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   .wc-carousel li p {
     min-height: 4em;
     white-space: normal; }
+  .wc-carousel-item{
+    width: 263px;}
 
 /* from me */
 .wc-message-from-me {
