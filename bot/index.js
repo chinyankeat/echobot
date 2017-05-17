@@ -205,13 +205,14 @@ bot.dialog('intro', [
 
         trackBotEvent(session, 'intro', 0);
         
-        session.send("I\'m your friendly Digi Virtual Assistant and I\'ll be available from 9pm-12am.");
+        session.send("I'm Yello, your friendly Virtual Assistant and I'll be available from 9pm-12am.");
+        session.send("I'm a just newbie and constantly learning to serve you. So please bear with me");
 		
         var respCards = new builder.Message(session)
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                 new builder.HeroCard(session)
-                .text('You can ask me (almost) anything about Digi\'s products.')
+                .text('You can ask me anything about Digi\'s products.')
                 .buttons([
                     builder.CardAction.imBack(session, "Let's get started", "Let's get started"),
                     builder.CardAction.imBack(session, "Contact our Customer Service", "Contact our Customer Service")
@@ -258,27 +259,28 @@ bot.dialog('ContactCustomerService', [
 		
 		var now = new Date();
 
-		session.send('You can reach Digi via our Community website, Live Chat or Email us at help@digi.com.my ');
-		if(now.getHours()>9 && now.getHours()<21) {         //WHITELIST 9pm-12pm for chatbot
-        var respCards = new builder.Message(session)
-            .attachmentLayout(builder.AttachmentLayout.carousel)
-            .attachments([
-                new builder.HeroCard(session)
-                .text('Digi Live Chat service is available from 10am to 9pm')
-                .buttons([
-                    builder.CardAction.openUrl(session, 'https://community.digi.com.my/', 'Digi Community Website'),
-                ])
-            ]);
-
-		} else {
+		if(now.getHours()>9 && now.getHours()<21) {         //between 9pm-12pm
+			session.send('Digi Live Chat service is available from 10am to 9pm.');
 			var respCards = new builder.Message(session)
 				.attachmentLayout(builder.AttachmentLayout.carousel)
 				.attachments([
 					new builder.HeroCard(session)
-					.text('Digi Live Chat service is available from 10am to 9pm')
+					.text('You can also reach Digi via our Community website or e-mail us at help@digi.com.my')
 					.buttons([
 						builder.CardAction.openUrl(session, 'https://community.digi.com.my/', 'Digi Community Website'),
-						builder.CardAction.openUrl(session, 'http://new.digi.com.my/webchat', 'Digi Live Chat'),
+						builder.CardAction.openUrl(session, 'http://new.digi.com.my/webchat', 'Digi Live Chat')
+					])
+				]);
+
+		} else {	// outside LiveChat hours
+			session.send('Digi Live Chat service will available from 10am to 9pm.');
+			var respCards = new builder.Message(session)
+				.attachmentLayout(builder.AttachmentLayout.carousel)
+				.attachments([
+					new builder.HeroCard(session)
+					.text('However you can reach Digi via our Community website or e-mail us at help@digi.com.my')
+					.buttons([
+						builder.CardAction.openUrl(session, 'https://community.digi.com.my/', 'Digi Community Website')
 					])
 				]);
 		}
@@ -387,7 +389,7 @@ bot.dialog('Prepaid', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Prepaid)|(reload)/i
+    matches: /(Prepaid)|(reload)|(add on)|(addon)/i
 });
 
 // R.0.0 - menu|Prepaid|PrepaidPlans
@@ -465,7 +467,7 @@ bot.dialog('Postpaid', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Postpaid)|(postpaid extra)/i
+    matches: /(Postpaid)|(postpaid extra)|(latest)|(recommended)/i
 });
 
 // R.1.0 - menu|Postpaid|PostpaidPlans
@@ -672,7 +674,7 @@ bot.dialog('Roaming', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Roaming)|(roam)/i
+    matches: /(Roaming)|(roam)|(idd)|(133)|(overseas)|(travel)/i
 });
 
 // R.3.0 - menu|Roaming|RoamingPlans
@@ -717,7 +719,7 @@ bot.dialog('RoamingPlans', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Roaming Plans)/i
+    matches: /(Roaming Plans)|(roam like home)|(roaming pass)|(roam pass)/i
 });
 
 // R.3.1 - menu|Roaming|RoamingTips
@@ -769,7 +771,7 @@ bot.dialog('RoamingTips', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Roaming Tips)/i
+    matches: /(Roaming Tips)|(data roaming)/i
 });
 
 // R.3.1.0 - menu|Roaming|RoamingTips|ActivateRoamingOver6Months
@@ -916,7 +918,7 @@ bot.dialog('SubscribeRoamingPass', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Roaming Pass)/i
+    matches: /(Roaming Pass)|(roam pass)/i
 });
 
 // R.3.1.5 - menu|Roaming|RoamingTips|MyDigiCheckRoamUsage
@@ -955,7 +957,7 @@ bot.dialog('MyDigiCheckRoamUsage', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(MyDigi Roam Usage Tracking)/i
+    matches: /(MyDigi Roam Usage Tracking)|(roam usage)|(overseas usage)/i
 });
 
 // R.3.1.6 - menu|Roaming|RoamingTips|UmbCheckRoamUsage
@@ -994,7 +996,7 @@ bot.dialog('UmbCheckRoamUsage', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(UMB Roam Usage Tracking)/i
+    matches: /(UMB Roam Usage Tracking)|(umb check roaming)/i
 });
 
 
@@ -1077,7 +1079,7 @@ bot.dialog('AllAboutMyAccount', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(About My Account)|(account)/i
+    matches: /(About My Account)|(account)|(my acc)/i
 });
 
 // R.4.0.0 - menu|FrequentlyAskedQuestion|AllAboutMyAccount|GetAccountNo
@@ -1147,7 +1149,7 @@ bot.dialog('ChangeMyAccOwnership', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Change My Account Ownership)|(Change my acc ownership)/i
+    matches: /(Change My Account Ownership)|(acc ownership)/i
 });
 
 // R.4.0.3 - menu|FrequentlyAskedQuestion|AllAboutMyAccount|CheckFnF
@@ -1186,7 +1188,7 @@ bot.dialog('CheckFnF', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Check FnF)|(Check Friends and Family)|(How to check F&F)/i
+    matches: /(Check FnF)|(Check Friends and Family)|(How to check F&F)|(friends and family)|(friend and family)|(friend family)|(friends family)/i
 });
 
 // R.4.0.5 - menu|FrequentlyAskedQuestion|AllAboutMyAccount|AddFnF
@@ -1296,7 +1298,7 @@ bot.dialog('HowToActivateVolte', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(How to activate Volte)|(How do I activate VOLTE)/i
+    matches: /(How to activate Volte)|(How do I activate VOLTE)|(volte)/i
 });
 
 // R.4.0.6.1.0 - menu|FrequentlyAskedQuestion|AllAboutMyAccount|AllAboutMyAccount2|HowToActivateVolte|ActivateVolte
@@ -1384,7 +1386,7 @@ bot.dialog('HowToPortIn', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(How to Port in)|(How do I port-in)/i
+    matches: /(How to Port in)|(How do I port-in)|(port in)|(portin)/i
 });
 
 // R.4.1 - menu|FrequentlyAskedQuestion|MyDigiApp
@@ -1409,7 +1411,7 @@ bot.dialog('MyDigiApp', [
         session.replaceDialog('menu');
     }        
 ]).triggerAction({
-    matches: /(MyDigi App)/i
+    matches: /(MyDigi App)|(mydigi)|(my digi)/i
 });
 
 // R.4.1.0 - menu|FrequentlyAskedQuestion|MyDigiApp|GetStartedMyDigi
@@ -1529,7 +1531,7 @@ bot.dialog('SeeBillsForPastSixMonths', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Bills for past 6 months)/i
+    matches: /(Bills for past 6 months)|(previous bill)|(past bill)/i
 });
 
 // R.4.1.2 - menu|FrequentlyAskedQuestion|MyDigiApp|PayForAnotherNumber
@@ -1663,7 +1665,7 @@ bot.dialog('ChargesOrBilling', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Charges Billing)/i
+    matches: /(Charges Billing)|(billing)|(charges)|(1800)/i
 });
 
 // R.4.3.0 - menu|FrequentlyAskedQuestion|ChargesOrBilling|ChargeForCallingTollFree
@@ -1693,7 +1695,7 @@ bot.dialog('ChargeForBuddyz', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Charge For Buddyz)|(Why is there an RM10 charge for my Buddyz)/i
+    matches: /(Charge For Buddyz)|(Why is there an RM10 charge for my Buddyz)|(buddyz)/i
 });
 
 // R.4.3.0 - menu|FrequentlyAskedQuestion|ChargesOrBilling|ChangeBillingCycle
@@ -1708,7 +1710,7 @@ bot.dialog('ChangeBillingCycle', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Change Billing Cycle)|(Can I change my billing cycle)/i
+    matches: /(Change Billing Cycle)|(Can I change my billing cycle)|(bill cycle)/i
 });
 
 //bot.dialog('NLP', [

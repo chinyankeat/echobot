@@ -957,7 +957,7 @@
                         className: "wc-header", id: "start-over-menu"       // added id menu
                     }, 
                         o.createElement("img", {className: "wc-header-icon",src: 'https://yellowchat.azurewebsites.net/images/digi-avatar.png',onLoad: e.onImageLoad}),
-                        o.createElement("span", {className: "wc-header-text"}, "Virtual Assistant"/*n.format.strings.title*/)
+                        o.createElement("span", {className: "wc-header-text"}, "Yello"/*n.format.strings.title*/)
                         ));
                     var i;
                     return "detect" === this.props.resize && (i = o.createElement(d, {
@@ -981,8 +981,20 @@
                     case "postBack":
                         t.sendPostBack(e, s, n, r);
                         break;
-                    case "call":
                     case "openUrl":
+						if(s.length>35) {
+							// string too long... just take the first part of URL "http://xxxxx.com/" + "..."
+							$("#wc-redirect-url").text(s.substr(0, (s.indexOf("/", 10)+1))+'...');							
+						} else {
+							$("#wc-redirect-url").text(s);
+						}
+						$("#wc-popup-url").css("z-index", "3");
+						$("#wc-popup-button-ok").attr('href',s);
+						$("#wc-popup-url").show();
+						break;
+//alert ("Open URL for [" + p + "][" + e + "][" + n + "][" + r + "][" + o + "] at URL [" + s+"]");
+//						break;
+                    case "call":
                     case "playAudio":
                     case "playVideo":
                     case "showImage":
@@ -5924,19 +5936,15 @@
                         onClick: this.props.onClickActivity
                     },                                            
 
-// uncomment  these code to put the Virtual Agent name on top instead of bellow
-//o.createElement("div", {className: "wc-message-from wc-message-from-" + i}, e),
-// uncomment  these code to add avatar
-//o.createElement("img", {className:"wc-message-from-bot-avatar",src: this.props.fromMe?'':'https://yellowchat.azurewebsites.net/images/digi-avatar.png',onLoad: e.onImageLoad}),
-o.createElement("img", {className:"wc-message-from-bot-avatar",src: this.props.fromMe?'':'https://yellowchat.azurewebsites.net/images/digi-avatar.png',onLoad: function(){
-	var elements = document.getElementById('wc-loading-container-id');
-	if(elements){
-		elements.parentNode.removeChild(elements);
-	}
-}}),
-										   
-										   
-										   
+					// uncomment  these code to put the Virtual Agent name on top instead of bellow
+					//o.createElement("div", {className: "wc-message-from wc-message-from-" + i}, e),
+						o.createElement("img", {className:"wc-message-from-bot-avatar",src: this.props.fromMe?'':'https://yellowchat.azurewebsites.net/images/digi-avatar.png',onLoad: function(){
+							var elements = document.getElementById('wc-loading-container-id');
+							if(elements){
+								elements.parentNode.removeChild(elements);
+							}
+						}}),
+				   
                        o.createElement("div", {
                         className: "wc-message wc-message-from-" + i,
                         ref: function (e) {
@@ -6065,13 +6073,27 @@ o.createElement("img", {className:"wc-message-from-bot-avatar",src: this.props.f
                     newTH.onclick = function () {
                         return e.onClickHome()
                     };
+					
+					var newFeedback = document.createElement('div');
+					newFeedback.className = 'rating-icon';
+					newFeedback.innerHTML = 'feedback';
+                    newFeedback.onclick = function () {
+						$("#wc-popup-feedback").css("z-index", "4");
+						$('#wc-popup-feedback').show();
+                    };
+					
                     
+					// Create Main Menu Button
                     var element = document.getElementById("start-over-menu");
                     var header_menu_element = document.getElementById("wc-header-menu-id");
                     if(element && header_menu_element==null) { 
                         element.appendChild(newTH);
+                        element.appendChild(newFeedback);
                     }
 
+					// Create Popup Window
+
+					
                     return this.props.inputText.length > 0 && (t += " has-text"), o.createElement("div", {
                         className: t
                     }, 
@@ -6456,7 +6478,7 @@ o.createElement("img", {className:"wc-message-from-bot-avatar",src: this.props.f
         });
         var n = {
             "en-us": {
-                title: "Digi Virtual Assistant",
+                title: "Yello",
                 send: "Send",
                 unknownFile: "[File of type '%1']",
                 unknownCard: "[Unknown Card '%1']",
