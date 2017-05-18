@@ -984,7 +984,7 @@
                     case "openUrl":
 						if(s.length>35) {
 							// string too long... just take the first part of URL "http://xxxxx.com/" + "..."
-							$("#wc-redirect-url").text(s.substr(0, (s.indexOf("/", 10)+1))+'...');							
+							$("#wc-redirect-url").text(s.substr(0, (s.indexOf("/", 25)+1))+'...');							
 						} else {
 							$("#wc-redirect-url").text(s);
 						}
@@ -992,8 +992,6 @@
 						$("#wc-popup-button-ok").attr('href',s);
 						$("#wc-popup-url").show();
 						break;
-//alert ("Open URL for [" + p + "][" + e + "][" + n + "][" + r + "][" + o + "] at URL [" + s+"]");
-//						break;
                     case "call":
                     case "playAudio":
                     case "playVideo":

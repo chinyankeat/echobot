@@ -462,7 +462,7 @@ bot.dialog('Postpaid', [
 //                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
                 ])
             ]);
-        builder.Prompts.choice(session, respCards, "blalala", { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
+        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
     },
     function (session, results) {
         session.send(DefaultMaxRetryErrorPrompt)
@@ -839,9 +839,6 @@ bot.dialog('iOSDataRoaming', [
                 .title('iOS Turn on/off data roaming')
                 .text('Go to Settings > Mobile Data > Mobile Data Options > slide the "Data Roaming" ON/OFF')
                 .images([ builder.CardImage.create(session, imagedir + '/images/Roaming-Activate-iOS.png') ])
-//                .buttons([
-//                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
-//                ])
             ]);
         builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries_SingleMenu, retryPrompt:DefaultErrorPrompt});        
     },
@@ -905,13 +902,6 @@ bot.dialog('SubscribeRoamingPass', [
                 .images([ builder.CardImage.create(session, imagedir + '/images/RRoaming-Pass-Step4.png') ])
                 .subtitle('Turn on Data Roaming or Cellular Data/Mobile Data on your mobile phone and you\'re ready to roam!')
             ]);
-//        session.send(respCards);
-//        respCards = new builder.Message(session)
-//            .attachments([
-//                new builder.HeroCard(session)
-////                    .buttons([
-////                        builder.CardAction.imBack(session, "Main Menu", "Main Menu")])
-//                ]);
         builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries_SingleMenu, retryPrompt:DefaultErrorPrompt});        
     },
     function (session, results) {
@@ -944,13 +934,6 @@ bot.dialog('MyDigiCheckRoamUsage', [
                 .subtitle('Select "Voice" for Voice minutes balance')
                 .images([ builder.CardImage.create(session, imagedir + '/images/Roaming-MyDigi-Step3.png') ])
             ]);
-//        session.send(respCards);
-//        respCards = new builder.Message(session)
-//            .attachments([
-//                new builder.HeroCard(session)
-//                    .buttons([
-//                        builder.CardAction.imBack(session, "Main Menu", "Main Menu")])
-//                ]);
         builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries_SingleMenu, retryPrompt:DefaultErrorPrompt});        
     },
     function (session, results) {
@@ -1009,7 +992,6 @@ bot.dialog('OtherQuestions', [
                 .text('We have the answers to the most asked questions on managing your account')
                 .buttons([
                     builder.CardAction.imBack(session, "About My Account", "Really?")
-//                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
                 ]),
 
                 new builder.HeroCard(session)
@@ -1017,7 +999,6 @@ bot.dialog('OtherQuestions', [
                 .text('An app to manage all your account needs. Find out how to use it. It\'s really easy!')
                 .buttons([
                     builder.CardAction.imBack(session, "MyDigi App", "Reqdy?")
-//                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
                 ]),
                         
                 new builder.HeroCard(session)
@@ -1025,7 +1006,6 @@ bot.dialog('OtherQuestions', [
                 .text('Did you know you can request from or give prepaid credit to others?')
                 .buttons([
                     builder.CardAction.imBack(session, "Talk Time Services", "Tell me how")
-//                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
                 ]),
 
                 new builder.HeroCard(session)
@@ -1033,7 +1013,6 @@ bot.dialog('OtherQuestions', [
                 .text('Got questions on your bills?')
                 .buttons([
                     builder.CardAction.imBack(session, "Charges Billing", "Let me help")
-//                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
                 ])
             ]);
         builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});        
@@ -1055,7 +1034,7 @@ bot.dialog('AllAboutMyAccount', [
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                 new builder.HeroCard(session)
-                .text("All About My Accounts")
+                .title("All About My Accounts")
                 .buttons([
                     builder.CardAction.imBack(session, "How to get my acc no", "How to get my acc no?"),
                     builder.CardAction.imBack(session, "What is my PUK code", "What is my PUK code?"),
@@ -1063,8 +1042,15 @@ bot.dialog('AllAboutMyAccount', [
                     builder.CardAction.imBack(session, "How to change my account ownership", "How to change my account ownership?"),
                     builder.CardAction.imBack(session, "How to check Friends & Family", "How to check Friends & Family?"),
                     builder.CardAction.imBack(session, "How to add Friends & Family", "How to add Friends & Family?"),
-//                    builder.CardAction.imBack(session, "Main Menu", "Main Menu"),
-                    builder.CardAction.imBack(session, "Account:Next Page", "Next Page")
+//                    builder.CardAction.imBack(session, "Account:Next Page", "Next Page")
+                ])
+            .attachments([
+                new builder.HeroCard(session)
+                .title("All About My Accounts")
+                .buttons([
+                    builder.CardAction.imBack(session, "I\'m going overseas", "I\'m going overseas, what can I do?"),
+                    builder.CardAction.imBack(session, "How do I activate VoLTE", "How do I activate VoLTE?"),
+                    builder.CardAction.imBack(session, "How do I port-in", "How do I port-in?")
                 ])
             ]);
         builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
@@ -1105,17 +1091,17 @@ bot.dialog('WhatIsMyPuk', [
                 new builder.HeroCard(session)
                 .title('Step 1')
                 .subtitle('On the MyDigi app, click on Menu')
-                .images([ builder.CardImage.create(session, imagedir + '/images/FAQ-PUK-step1') ]),
+                .images([ builder.CardImage.create(session, imagedir + '/images/FAQ-PUK-step1.png') ]),
 
                 new builder.HeroCard(session)
                 .title('Step 2')
                 .subtitle('Click on Settings')
-                .images([ builder.CardImage.create(session, imagedir + '/images/FAQ-PUK-step2') ]),
+                .images([ builder.CardImage.create(session, imagedir + '/images/FAQ-PUK-step2.png') ]),
                         
                 new builder.HeroCard(session)
                 .title('Step 3')
                 .subtitle('Swipe left to select SIM and you will find your PUK code')
-                .images([ builder.CardImage.create(session, imagedir + '/images/FAQ-PUK-step3') ])
+                .images([ builder.CardImage.create(session, imagedir + '/images/FAQ-PUK-step3.png') ])
             ]);
         builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries_SingleMenu, retryPrompt:DefaultErrorPrompt});
     },
@@ -1156,9 +1142,7 @@ bot.dialog('WhatIsMyPuk2', [
                 .title('Step 3')
                 .subtitle('Swipe left to select SIM and you will find your PUK code')
                 .images([ builder.CardImage.create(session, imagedir + '/images/FAQ-PUK-step3.png') ])
-            ]);
-        session.send(respCards);        
-		
+            ]);		
 		builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries_SingleMenu, retryPrompt:DefaultErrorPrompt});
     },
     function (session, results) {
@@ -1264,10 +1248,10 @@ bot.dialog('AllAboutMyAccount2', [
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                 new builder.HeroCard(session)
-                .text("All About My Accounts")
+                .title("All About My Accounts")
                 .buttons([
                     builder.CardAction.imBack(session, "I\'m going overseas", "I\'m going overseas, what can I do?"),
-                    builder.CardAction.imBack(session, "How do I activate VOLTE", "How do I activate VOLTE?"),
+                    builder.CardAction.imBack(session, "How do I activate VoLTE", "How do I activate VoLTE?"),
                     builder.CardAction.imBack(session, "How do I port-in", "How do I port-in?")
 //                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
                 ])
@@ -1319,7 +1303,7 @@ bot.dialog('HowToActivateVolte', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(How to activate Volte)|(How do I activate VOLTE)|(volte)/i
+    matches: /(How to activate Volte)|(How do I activate VoLTE)|(volte)/i
 });
 
 // R.4.0.6.1.0 - menu|OtherQuestions|AllAboutMyAccount|AllAboutMyAccount2|HowToActivateVolte|ActivateVolte
@@ -1402,6 +1386,7 @@ bot.dialog('MyDigiApp', [
         trackBotEvent(session, 'menu|OtherQuestions|MyDigiApp',1);        
         
         var respCards = new builder.Message(session)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                 new builder.HeroCard(session)
                 .buttons([
@@ -1571,6 +1556,7 @@ bot.dialog('TalkTimeServices', [
         trackBotEvent(session, 'menu|OtherQuestions|TalkTimeServices',1);
 
         var respCards = new builder.Message(session)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                 new builder.HeroCard(session)
                 .buttons([
@@ -1628,13 +1614,14 @@ bot.dialog('ChargesOrBilling', [
         trackBotEvent(session, 'menu|OtherQuestions|ChargesOrBilling',1);
 
         var respCards = new builder.Message(session)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                 new builder.HeroCard(session)
+				.title("Charges / Billing")
                 .buttons([
                     builder.CardAction.imBack(session, 'Will I be charged for calling 1300 1800 numbers', 'Will I be charged for calling 1300/1800 numbers?'),
                     builder.CardAction.imBack(session, 'Why is there an RM10 charge for my Buddyz', 'Why is there an RM10 charge for my Buddyz?'),
                     builder.CardAction.imBack(session, 'Can I change my billing cycle', 'Can I change my billing cycle?')
-//                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
                 ])
             ]);
         builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
