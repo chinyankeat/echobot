@@ -205,9 +205,9 @@ bot.dialog('intro', [
 
         trackBotEvent(session, 'intro', 0);
         
-        session.send("I'm Yello, your friendly Virtual Assistant and I'll be available from 9pm-12am.");
-        session.send("I'm a just newbie and constantly learning to serve you. So please bear with me");
-		
+        session.send("Hello, I'm Yello! Nice to meet you. I'm here 9pm-12am every day to help you on all things Digi.");
+        session.send("I'm continuously learning to serve you better, so please be patient with me");
+
         var respCards = new builder.Message(session)
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
@@ -327,7 +327,7 @@ bot.dialog('menu2', [
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                 new builder.HeroCard(session)
-                .text('To get started, these are the things I can help you with. Just click on any of the below and let\'s get started.')
+                .text('Just click on any of the below and let\'s get started.')
                 .buttons([
                     builder.CardAction.imBack(session, "Prepaid", "Prepaid"),
                     builder.CardAction.imBack(session, "Postpaid", "Postpaid"),

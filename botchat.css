@@ -354,7 +354,8 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
     padding-bottom: 10px; }
   .wc-card h1, .wc-card h2, .wc-card p {
     margin-left: 8px;
-    margin-right: 8px; }
+    margin-right: 8px; 
+	min-height: 40px;}
   .wc-card p h2 {
     /* don't double indent */
     margin-left: 0; }
