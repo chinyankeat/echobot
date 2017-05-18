@@ -16,8 +16,8 @@
 			<br> Do you wish to continue? 
 				<br>
 				<span> 
-					<a id="wc-popup-button-ok" href="http://bot.digi.com.my" class="button">Yes</a>
-					<button id="wc-popup-button-cancel" class="wc-popup-button" type="button">Cancel</button> 
+					<a id="wc-popup-button-ok" href="http://bot.digi.com.my" target="_blank" class="button">Yes</a>
+					<button id="wc-popup-button-cancel" class="wc-popup-button" type="button" onclick="$('#wc-popup-url').hide();" = >Cancel</button> 
 				</span>
 			</div>
 		</div>
@@ -40,7 +40,7 @@
 						<textarea rows="3" class="form-control " id="popup-feedback-remark"  name="survey-text" placeholder="Enter your feedback here" ></textarea>
 						<span>
 							<input type="submit">
-							<button id="wc-popup-feedback-cancel" class="wc-popup-button" type="button">Cancel</button> 
+							<button id="wc-popup-feedback-cancel" class="wc-popup-button" type="button" onclick='$("#wc-popup-feedback").hide();'>Cancel</button> 
 						</span>
 					</form>				
 
