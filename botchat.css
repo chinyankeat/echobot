@@ -39,12 +39,12 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   z-index: 1; }
 
 .wc-header-icon{
-  border-radius: 30px;
-  border: 1px solid #ccc;
+
 }
 .wc-header-text {
   position: absolute;
-  left: 40px;
+  left: 45px;
+  margin-top: 4px;
 }
 .wc-header-menu {
   float: right;

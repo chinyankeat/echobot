@@ -1289,7 +1289,7 @@ bot.dialog('HowToActivateVolte', [
                 .subtitle("Let's check if your device is compatible. If you're sure it is, instructions for activation is right here.")
                 .buttons([
                     builder.CardAction.openUrl(session, 'http://new.digi.com.my/services/volte', 'Check'),
-                    builder.CardAction.imBack(session, "Activate Volte", "Activate Volte")
+                    builder.CardAction.imBack(session, "VoLTE Activation", "Activation")
                 .images([ builder.CardImage.create(session, imagedir + '/images/FAQ-Activate-Volte.jpg') ])
                 ])
             ]);
@@ -1308,7 +1308,7 @@ bot.dialog('ActivateVolte', [
     function (session) {
         trackBotEvent(session, 'menu|OtherQuestions|AllAboutMyAccount|AllAboutMyAccount2|HowToActivateVolte|ActivateVolte',1);
 
-        session.send("You can follow the steps below");        
+        session.send("You can follow the steps below");
         var respCards = new builder.Message(session)
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
@@ -1339,7 +1339,7 @@ bot.dialog('ActivateVolte', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Activate Volte)/i
+    matches: /(VoLTE Activation)/
 });
 
 // R.4.0.6.2 - menu|OtherQuestions|AllAboutMyAccount|AllAboutMyAccount2|HowToPortIn
