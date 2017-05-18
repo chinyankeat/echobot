@@ -405,7 +405,7 @@ bot.dialog('PrepaidPlans', [
                 new builder.HeroCard(session)
                 .title('Digi Prepaid Live')
                 .subtitle('RM 12 (incl. GST). Preloaded with RM8 & 300MB Internet for 7 days. Pack validity:5 days')
-                .images([ builder.CardImage.create(session, imagedir + '/images/Prepaid-Live.png') ])
+                .images([ builder.CardImage.create(session, imagedir + '/images/Prepaid-Live.jpg') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=20016&isBundle=n&ppymttype=PREPAID&ptype=VOICE&orderType=NL&_ga=1.167919842.2103412470.1490767162', 'Buy Now'),
                     builder.CardAction.openUrl(session, 'http://new.digi.com.my/prepaid/live', 'More Info')
@@ -413,7 +413,7 @@ bot.dialog('PrepaidPlans', [
                 new builder.HeroCard(session)
                 .title('Digi Prepaid Best')
                 .subtitle('RM 8 (incl. GST). Preloaded with RM 5 & 300MB Internet for 7 days. Pack validity: 10 days')
-                .images([ builder.CardImage.create(session, imagedir + '/images/Prepaid-Best.png') ])
+                .images([ builder.CardImage.create(session, imagedir + '/images/Prepaid-Best.jpg') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=20015&isBundle=n&ppymttype=PREPAID&ptype=VOICE&orderType=NL&_ga=1.94994527.2103412470.1490767162', 'Buy Now'),
                     builder.CardAction.openUrl(session, 'http://new.digi.com.my/prepaid-plans', 'More Info')
@@ -482,7 +482,7 @@ bot.dialog('PostpaidPlans', [
             .attachments([
                 new builder.HeroCard(session)
                 .title('Digi Postpaid 150 Infinite')
-                .images([ builder.CardImage.create(session, imagedir + '/images/Postpaid-Infinite.PNG') ])
+                .images([ builder.CardImage.create(session, imagedir + '/images/Postpaid-Infinite.jpg') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=DGI150&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=NL&_ga=1.164776316.2103412470.1490767162', 'Buy Now'),
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=DGI150&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=MNP&_ga=1.164776316.2103412470.1490767162', 'Port In'),
@@ -492,7 +492,7 @@ bot.dialog('PostpaidPlans', [
                 ]),
                 new builder.HeroCard(session)
                 .title('Digi Postpaid 50')
-                .images([ builder.CardImage.create(session, imagedir + '/images/Postpaid-50.PNG') ])
+                .images([ builder.CardImage.create(session, imagedir + '/images/Postpaid-50.jpg') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=10201VPA&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=NL&_ga=1.239507461.769883286.1492574194', 'Buy Now'),
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=10201VPA&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=MNP&_ga=1.155287800.2103412470.1490767162', 'Port In'),
@@ -502,7 +502,7 @@ bot.dialog('PostpaidPlans', [
                 ]),
                 new builder.HeroCard(session)
                 .title('Digi Postpaid 80')
-                .images([ builder.CardImage.create(session, imagedir + '/images/Postpaid-80.PNG') ])
+                .images([ builder.CardImage.create(session, imagedir + '/images/Postpaid-80.jpg') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=10200VP_EX&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=NL&_ga=1.65621101.2103412470.1490767162', 'Buy Now'),
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=10200VP_EX&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=MNP&_ga=1.92479582.2103412470.1490767162', 'Port In'),
@@ -512,7 +512,7 @@ bot.dialog('PostpaidPlans', [
                 ]),
                 new builder.HeroCard(session)
                 .title('Digi Postpaid 110')
-                .images([ builder.CardImage.create(session, imagedir + '/images/Postpaid-110.PNG') ])
+                .images([ builder.CardImage.create(session, imagedir + '/images/Postpaid-110.jpg') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=10202VP_EX&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=NL&_ga=1.92479582.2103412470.1490767162', 'Buy Now'),
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=10202VP_EX&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=MNP&_ga=1.94988767.2103412470.1490767162', 'Port In'),
@@ -583,7 +583,7 @@ bot.dialog('BroadbandPlans', [
                 new builder.HeroCard(session)
                 .title('Broadband 30')
                 .subtitle('Get started for only RM38 (incl. GST) for a starter pack for only RM30 preload value')
-                .images([ builder.CardImage.create(session, imagedir + '/images/Broadband-30.PNG') ])
+                .images([ builder.CardImage.create(session, imagedir + '/images/Broadband-30.jpg') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=20017&isBundle=n&ppymttype=PREPAID&ptype=BB&_ga=1.55846120.2103412470.1490767162', 'Buy Now'),
                     builder.CardAction.openUrl(session, 'http://new.digi.com.my/broadband', 'More Info')
@@ -592,7 +592,7 @@ bot.dialog('BroadbandPlans', [
                 new builder.HeroCard(session)
                 .title('Broadband 60')
                 .subtitle('Sign up for the postpaid broadband plan online or at the nearest Digi Store!')
-                .images([ builder.CardImage.create(session, imagedir + '/images/Broadband-60.PNG') ])
+                .images([ builder.CardImage.create(session, imagedir + '/images/Broadband-60.jpg') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=90000P&isBundle=y&ppymttype=POSTPAID&ptype=BB&_ga=1.55846120.2103412470.1490767162', 'Buy Now'),
                     builder.CardAction.openUrl(session, 'http://new.digi.com.my/broadband', 'More Info')
@@ -601,7 +601,7 @@ bot.dialog('BroadbandPlans', [
                 new builder.HeroCard(session)
                 .title('Broadband 100')
                 .subtitle('Sign up for a postpaid broadband plan for more value')
-                .images([ builder.CardImage.create(session, imagedir + '/images/Broadband-100.PNG') ])
+                .images([ builder.CardImage.create(session, imagedir + '/images/Broadband-100.jpg') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=90001P&isBundle=y&ppymttype=POSTPAID&ptype=BB&_ga=1.156903800.2103412470.1490767162', 'Buy Now'),
                     builder.CardAction.openUrl(session, 'http://new.digi.com.my/broadband', 'More Info')
@@ -656,7 +656,7 @@ bot.dialog('Roaming', [
                 new builder.HeroCard(session)
                 .title('IDD Rates')
                 .text("International calls and SMS rates")
-                .images([ builder.CardImage.create(session, imagedir + '/images/Roaming-Rates.PNG') ])
+                .images([ builder.CardImage.create(session, imagedir + '/images/Roaming-Rates.jpg') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'http://new.digi.com.my/roaming/international-calls-sms-rates', 'More')
 //                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
@@ -664,7 +664,7 @@ bot.dialog('Roaming', [
                 new builder.HeroCard(session)
                 .title('IDD 133')
                 .text('Did you know we offer the lowest IDD rates to 36 countries?')
-                .images([ builder.CardImage.create(session, imagedir + '/images/Roaming-133.PNG') ])
+                .images([ builder.CardImage.create(session, imagedir + '/images/Roaming-133.jpg') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'http://new.digi.com.my/roaming/idd-133', 'More')
 //                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
@@ -1067,7 +1067,7 @@ bot.dialog('GetAccountNo', [
 
         session.send("Your account number is available on your bill at the top right hand corner. Eg: 1.356XXXX");
         
-//        builder.Prompts.choice(session, "Your account number is available on your bill at the top right hand corner. Eg: 1.356XXXX", 'Main Menu', { listStyle:builder.ListStyle.button, maxRetries:MaxRetries_SingleMenu, retryPrompt:DefaultErrorPrompt});
+		
     },
     function (session, results) {
         session.replaceDialog('menu');

@@ -54,7 +54,6 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   background-color: #0073de;
   color: #FFFFFF;
 }
-
 .wc-popup {
   z-index: 0;
   height: 100%;
@@ -69,7 +68,8 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 .wc-popup-window {
   height: 300px;
   width: 370px;
-  background-image: url("http://bot.digi.com.my/images/NFFFFFF-1.png");
+  background-color: #ffcc33;	
+/*  background-image: url("http://bot.digi.com.my/images/NFFFFFF-1.png");*/
   box-shadow: 1px 2px 10px rgba(100, 100, 100, .3);
   position:fixed;
   transform: translate(-50%, -50%);
@@ -85,6 +85,24 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   width: 100%;
   background-image: url("http://bot.digi.com.my/images/DCDCDC-1.png");
 }
+.wc-popup-button {
+  background-color: #FFFFFF;    /* modified by Chin 3 May 2017 */
+  color: #0073de;    /* modified by Chin 28 Apr 2017 */
+  font-weight: 600;  /* modified by Chin 28 Apr 2017 */
+  min-height: 32px;
+  width: 120px;      /* modified by Chin 9 May 2017 for avatar*/
+  margin-top: 20px;		
+  padding: 0 16px;
+  border-radius: 8px;/* Chin added 28 Apr 2017 */
+  font-size: 14px; } /* Chin added 5 May  2017 */
+.wc-popup-button:hover {
+  background-color: #0073de;    /* modified by Chin 3 May 2017 */
+  border-color: #0073de;        /* modified by Chin 3 May 2017 */
+  color: #FFFFFF; }             /* modified by Chin 3 May 2017 */
+.wc-popup-button:active {
+  background-color: #0073de;
+  border-color: #0073de;
+  color: #fff; }
 
 .rating-icon {
   font-family: FontAwesome;
@@ -124,11 +142,6 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
 .rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
-
-
-.wc-popup-button {
-  background-color: #ffffff;
-}
 
 .wc-loading-container {
   position: relative;
