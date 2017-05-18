@@ -409,7 +409,6 @@ bot.dialog('PrepaidPlans', [
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=20016&isBundle=n&ppymttype=PREPAID&ptype=VOICE&orderType=NL&_ga=1.167919842.2103412470.1490767162', 'Buy Now'),
                     builder.CardAction.openUrl(session, 'http://new.digi.com.my/prepaid/live', 'More Info')
-//                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
                 ]),
                 new builder.HeroCard(session)
                 .title('Digi Prepaid Best')
@@ -418,7 +417,6 @@ bot.dialog('PrepaidPlans', [
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=20015&isBundle=n&ppymttype=PREPAID&ptype=VOICE&orderType=NL&_ga=1.94994527.2103412470.1490767162', 'Buy Now'),
                     builder.CardAction.openUrl(session, 'http://new.digi.com.my/prepaid-plans', 'More Info')
-//                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
                 ])
             ]);
         builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
@@ -1043,8 +1041,7 @@ bot.dialog('AllAboutMyAccount', [
                     builder.CardAction.imBack(session, "How to check Friends & Family", "How to check Friends & Family?"),
                     builder.CardAction.imBack(session, "How to add Friends & Family", "How to add Friends & Family?"),
 //                    builder.CardAction.imBack(session, "Account:Next Page", "Next Page")
-                ])
-            .attachments([
+                ]),
                 new builder.HeroCard(session)
                 .title("All About My Accounts")
                 .buttons([
