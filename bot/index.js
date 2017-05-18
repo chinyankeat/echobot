@@ -456,7 +456,9 @@ bot.dialog('Postpaid', [
                 .subtitle('All the extras to stay connected')
                 .images([ builder.CardImage.create(session, imagedir + '/images/Postpaid-Extra.jpg') ])
                 .buttons([
-                    builder.CardAction.openUrl(session, 'http://new.digi.com.my/postpaid-addons', 'More')
+                    builder.CardAction.openUrl(session, 'http://new.digi.com.my/postpaid-addons#Internet-Top-Up', 'Internet Topup'),
+                    builder.CardAction.openUrl(session, 'http://new.digi.com.my/postpaid-addons#Freemium', 'Freemium'),
+                    builder.CardAction.openUrl(session, 'http://new.digi.com.my/postpaid-addons#Premium', 'Premium')
 //                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
                 ])
             ]);
@@ -554,7 +556,7 @@ bot.dialog('Broadband', [
                 new builder.HeroCard(session)
                 .title('Running low on quota?')
                 .text('Get more quota now!')
-                .images([ builder.CardImage.create(session, imagedir + '/images/Broadband-LowQuota') ])
+                .images([ builder.CardImage.create(session, imagedir + '/images/Broadband-LowQuota.jpg') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'http://digi.my/mybb', 'More')
 //                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
@@ -582,7 +584,7 @@ bot.dialog('BroadbandPlans', [
             .attachments([
                 new builder.HeroCard(session)
                 .title('Broadband 30')
-                .subtitle('For prepaid')
+                .subtitle('Get started for only RM38 (incl. GST) for a starter pack for only RM30 preload value')
                 .images([ builder.CardImage.create(session, imagedir + '/images/Broadband-30.PNG') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=20017&isBundle=n&ppymttype=PREPAID&ptype=BB&_ga=1.55846120.2103412470.1490767162', 'Buy Now'),
@@ -591,7 +593,7 @@ bot.dialog('BroadbandPlans', [
                 ]),
                 new builder.HeroCard(session)
                 .title('Broadband 60')
-                .subtitle('For Postpaid')
+                .subtitle('Sign up for the postpaid broadband plan online or at the nearest Digi Store!')
                 .images([ builder.CardImage.create(session, imagedir + '/images/Broadband-60.PNG') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=90000P&isBundle=y&ppymttype=POSTPAID&ptype=BB&_ga=1.55846120.2103412470.1490767162', 'Buy Now'),
@@ -600,7 +602,7 @@ bot.dialog('BroadbandPlans', [
                 ]),
                 new builder.HeroCard(session)
                 .title('Broadband 100')
-                .subtitle('For Postpaid')
+                .subtitle('Sign up for a postpaid broadband plan for more value')
                 .images([ builder.CardImage.create(session, imagedir + '/images/Broadband-100.PNG') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=90001P&isBundle=y&ppymttype=POSTPAID&ptype=BB&_ga=1.156903800.2103412470.1490767162', 'Buy Now'),
@@ -722,7 +724,7 @@ bot.dialog('RoamingPlans', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Roaming Plans)|(roam like home)|(roaming pass)|(roam pass)/i
+    matches: /(Roaming Plans)|(roam like home)|(roam pass)/i
 });
 
 // R.3.1 - menu|Roaming|RoamingTips
@@ -792,9 +794,6 @@ bot.dialog('ActivateRoamingOver6Months', [
                 \n\n International Roaming >\
                 \n\n click \"Subscribe\" >')
                 .images([ builder.CardImage.create(session, imagedir + '/images/Roaming-Activate-Over6Months.png') ])
-//                .buttons([
-//                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
-//                ])
             ]);
         builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries_SingleMenu, retryPrompt:DefaultErrorPrompt});        
     },
@@ -816,13 +815,7 @@ bot.dialog('ActivateRoamingBelow6Months', [
             .attachments([
                 new builder.HeroCard(session)
                 .title('Walk in to a Digi Store ')
-                .text('Please provide us with \
-                \n\n ○ Photocopy of NRIC\
-                \n\n ○ Valid Passport\
-                \n\n ○ Work permit (for non-Malaysian)')
-//                .buttons([
-//                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
-//                ])
+                .text('Please provide us with (1)Photocopy of NRIC (2)Valid Passport (3)Work permit(for non-Malaysian)')
             ]);
         builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries_SingleMenu, retryPrompt:DefaultErrorPrompt});        
     },
