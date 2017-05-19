@@ -5808,21 +5808,21 @@
                         }
                     }, o.createElement("div", {
                         className: "wc-message-group-content",
-						id: "wc-message-group-content-id",
-                        ref: function (t) {
-                            return e.scrollContent = t;
-                        }
-                    }, o.createElement("img", { className: "wc-intro-logo",src: 'http://bot.digi.com.my/images/start-logo.PNG'})
+						id: "wc-message-group-content-id"
+                    }, o.createElement("img", { className: "wc-intro-logo",src: 'http://bot.digi.com.my/images/start-logo.PNG',ref: function (t) {
+                            return e.scrollContent = t; }})
 
 				   	, o.createElement("div", { className: "wc-intro-name"},"HELLO")
 
 					// Yan Keat: this is added to put in the typing icon
                     , o.createElement("div", { id: "wc-loading-container-id", className:"wc-loading-container"}
 						, o.createElement("img", { src:'http://bot.digi.com.my/images/typingstatus.png'})
-						, o.createElement("div", { className: "wc-typing wc-loading-container-typing", })
-						, o.createElement("div", { style :{"margin-top":"170px"} })
+						, o.createElement("div", { className: "wc-typing wc-loading-container-typing"})
 					)
-                    ,t))
+                    ,t)
+// this is persistent menu, but will scroll up / down
+//					, o.createElement("div", {id: "wc-persistent-menu-id"}, "ABCDE")
+					)
                 }, t
             }(o.Component);
         t.HistoryView = u, t.History = i.connect(function (e) {
@@ -5922,13 +5922,6 @@
                         u = a.classList("wc-message-wrapper", this.props.activity.attachmentLayout || "list", this.props.onClickActivity && "clickable"),
                         c = a.classList("wc-message-content", this.props.selected && "selected");
 
-//if(!this.props.fromMe){
-//alert("time to clear typing");
-////    var elements = document.getElementsByClassName('wc-typing');
-////    while(elements.length > 0){
-////        elements[0].classList.remove('wc-typing');
-//}
-                    
                     return o.createElement("div"
                     , {
                         "data-activity-id": this.props.activity.id,
@@ -6283,21 +6276,21 @@
 //e.handleIncomingActivity(Object('{ "activities": [ {"type": "typing","id": "4NuISsqNMqXgzpO4iKH18|B2auDTZh980","timestamp": "2017-05-16T03:53:40.5456507Z","localTimestamp": "2017-05-16T03:53:38.237+00:00","channelId": "directline","from": {"id": "yellow","name": "Virtual Assistant"},"conversation": {"id": "4NuISsqNMqXgzpO4iKH18"},"locale": "en-US","replyToId": "4NuISsqNMqXgzpO4iKH18|0000004"}]}'));
 
 					// Chin Added codes below to add ... typing
-                    var newTypingContainer = document.createElement("div");
-					newTypingContainer.id = 'wc-loading-container-id';
-                    newTypingContainer.className = 'wc-loading-container';
-
-					var newTyping = document.createElement("div");
-                    newTyping.className = 'wc-typing wc-loading-container-typing';
-					
-					var newTypingImg = document.createElement("IMG");
-					newTypingImg.setAttribute("src", "http://bot.digi.com.my/images/typingstatus.png");
-					
-					newTypingContainer.appendChild(newTyping);
-					newTypingContainer.appendChild(newTypingImg);
-					
                     var element = document.getElementById("wc-message-group-content-id");
                     if(element) { 
+						var newTypingContainer = document.createElement("div");
+						newTypingContainer.id = 'wc-loading-container-id';
+						newTypingContainer.className = 'wc-loading-container';
+
+						var newTyping = document.createElement("div");
+						newTyping.className = 'wc-typing wc-loading-container-typing';
+
+						var newTypingImg = document.createElement("IMG");
+						newTypingImg.setAttribute("src", "http://bot.digi.com.my/images/typingstatus.png");
+
+						newTypingContainer.appendChild(newTyping);
+						newTypingContainer.appendChild(newTypingImg);
+					
                         element.appendChild(newTypingContainer);
                     }
 					

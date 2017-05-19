@@ -162,6 +162,9 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   left: 40px;
 }
 
+#wc-persistent-menu {
+  height:20px;	
+}
 .wc-time {
   color: #999;
   margin-bottom: 10px; }
@@ -197,7 +200,7 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 .wc-suggested-actions {
   background-color: #f9f9f9;
   bottom: 50px;
-  height: 0;
+  height: 20;
   left: 0;
   overflow: hidden;
   position: absolute;
