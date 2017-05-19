@@ -12,12 +12,12 @@
 		<div id="wc-popup-url" class="wc-popup">
 			<div class="wc-popup-window">
 				<div style="padding: 40px;">
-					<h3>I will redirect you to Digi Website</h3>
+					<h3>You will be redirected away to Digi Website</h3>
 					Do you wish to continue? 
 					<br>
 					<span> 
-						<a id="wc-popup-button-ok" href="http://bot.digi.com.my" target="_blank"><button class="wc-popup-button">Yes</button></a>
-						<button id="wc-popup-button-cancel" class="wc-popup-button" onclick="$('#wc-popup-url').hide();" = >Cancel</button> 
+						<a id="wc-popup-button-ok" href="http://bot.digi.com.my" target="_blank"><button class="wc-popup-button" onclick="$('#wc-popup-url').fadeOut(200);">Yes</button></a>
+						<button id="wc-popup-button-cancel" class="wc-popup-button" onclick="$('#wc-popup-url').fadeOut(200);" >Cancel</button> 
 					</span>
 				</div>
 			</div>
@@ -27,22 +27,23 @@
 			<div class="wc-popup-window">
 				<div class="wc-popup-window-header">We appreciate your feedback</div>
 
-				<br>How would you rate our Chat Service? 
-				<div>															
-					<form onsubmit="myFunction()">
-						<fieldset id="popup-feedback-stars" class="rating">
-							<input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="☆☆☆☆☆ - Awesome"></label>
-							<input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="☆☆☆☆ - Pretty good"></label>
-							<input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="☆☆☆ - OK"></label>
-							<input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="☆☆ - Need Improvement"></label>
-							<input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="☆ - Not Helpful"></label>
-						</fieldset>
+				<div class="wc-popup-window-body">
+					How would you rate our Chat Service? 
+					<form id="feedbackForm" onSubmit="submitFeedback()">
+						<div>
+							<fieldset id="popup-feedback-stars" class="rating">
+								<input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="☆☆☆☆☆ - Awesome"></label>
+								<input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="☆☆☆☆ - Pretty good"></label>
+								<input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="☆☆☆ - OK"></label>
+								<input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="☆☆ - Need Improvement"></label>
+								<input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="☆ - Not Helpful"></label>
+							</fieldset>
 
-						<textarea rows="3" class="form-control " id="popup-feedback-remark"  name="survey-text" placeholder="Enter your feedback here" ></textarea>
-						<span>
-							<input type="submit">
-							<button id="wc-popup-feedback-cancel" class="wc-popup-button" type="button" onclick='$("#wc-popup-feedback").hide();'>Cancel</button> 
-						</span>
+							<textarea rows="3" class="form-control wc-feedback-text" id="popup-feedback-remark"  name="survey-text" placeholder="Enter your feedback here" ></textarea>
+						</div>
+						<br><br><br>
+						<input type="submit" class="wc-popup-button">
+						<button id="wc-popup-feedback-cancel" class="wc-popup-button" type="button" onclick='$("#wc-popup-feedback").fadeOut(200);'>Cancel</button> 
 					</form>				
 
 				</div>

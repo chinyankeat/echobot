@@ -990,7 +990,7 @@
 						}
 						$("#wc-popup-url").css("z-index", "3");
 						$("#wc-popup-button-ok").attr('href',s);
-						$("#wc-popup-url").show();
+						$("#wc-popup-url").fadeIn(150);
 						break;
                     case "call":
                     case "playAudio":

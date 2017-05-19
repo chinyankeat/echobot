@@ -55,7 +55,7 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   color: #FFFFFF;
 }
 .wc-popup {
-  z-index: 0;
+  z-index: 2;
   height: 100%;
   width: 100%;
   background-image: url("http://bot.digi.com.my/images/FFFFFF-0.9.png");
@@ -64,12 +64,10 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   margin: -8px;
   display:none;
 }
-
 .wc-popup-window {
   height: 300px;
   width: 370px;
   background-color: #ffcc33;	
-/*  background-image: url("http://bot.digi.com.my/images/NFFFFFF-1.png");*/
   box-shadow: 1px 2px 10px rgba(100, 100, 100, .3);
   position:fixed;
   transform: translate(-50%, -50%);
@@ -79,11 +77,20 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   text-align: center;
   font-size: 23px;
 }
-
 .wc-popup-window-header {
   height: 50px;
   width: 100%;
-  background-image: url("http://bot.digi.com.my/images/DCDCDC-1.png");
+  padding-top: 15px;
+}
+.wc-popup-window-body{
+  background-color: #FFFFFF;    /* modified by Chin 3 May 2017 */
+  font-size: 14pt;
+  height: 235px;
+}
+.wc-feedback-text{
+  float: left;
+  margin-left: 22px;
+  width: 300px;
 }
 .wc-popup-button {
   background-color: #FFFFFF;    /* modified by Chin 3 May 2017 */
@@ -111,6 +118,7 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 .rating { 
   border: none;
   float: left;
+  font-size: 18pt;
 }
 
 .rating > input { display: none; } 
