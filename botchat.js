@@ -974,6 +974,8 @@
             }(o.Component);
         t.Chat = p, t.doCardAction = function (e, n, r, o) {
             return function (i, s) {
+				// Yan Keat: Start Feedback timer, to trigger feedback form if user is idle for long time
+				startFeedbackTimer();
                 switch (i) {
                     case "imBack":
                         s && "string" == typeof s && o(s, n, r);
@@ -6056,7 +6058,7 @@
                     "Enter" === e.key && this.sendMessage()
                 }, t.prototype.onClickSend = function () {
                     this.textInput.focus(), this.sendMessage()
-                }, t.prototype.onClickHome = function () {  //  added code here to trigger Main Menu
+                }, t.prototype.onClickHome = function () {  //  Yan Keat: added code here to trigger Main Menu
                     this.props.sendMessage("Main Menu")
                 }, t.prototype.onChangeFile = function () {
                     this.textInput.focus(), this.props.sendFiles(this.fileInput.files), this.fileInput.value = null
@@ -6115,6 +6117,7 @@
                     })), o.createElement("label", {
                         className: "wc-send",
                         onClick: function () {
+							startFeedbackTimer();	// track first user interaction
                             return e.onClickSend()
                         }
                     }, o.createElement("svg", null, o.createElement("path", {
@@ -6145,6 +6148,7 @@
                 strings: e.strings,
                 onChangeText: t.onChangeText,
                 sendMessage: function (n) {
+					startFeedbackTimer();	// Yan Keat: add code here to start timer after first user interaction
                     return t.sendMessage(n, e.user, e.locale)
                 },
                 sendFile: function (n) {

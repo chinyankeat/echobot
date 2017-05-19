@@ -228,22 +228,22 @@ bot.dialog('intro', [
     }
 ]);
 
-// R - menu
-bot.dialog('menu', [
-    function (session) {
-        
-        if(session.privateConversationData[NumOfFeedback]>2)    // Get Feedback every 2nd transaction
-        {
-            session.privateConversationData[NumOfFeedback] = 0;
-            session.replaceDialog('getFeedback');
-        } else {
-            session.privateConversationData[NumOfFeedback]++;
-            session.replaceDialog('menu2');            
-        }
-    }
-]).triggerAction({
-    matches: /^(main menu)|(menu)|(begin)|(Let\'s get started)$/i
-});
+//// R - menu
+//bot.dialog('menu', [
+//    function (session) {
+//        
+//        if(session.privateConversationData[NumOfFeedback]>2)    // Get Feedback every 2nd transaction
+//        {
+//            session.privateConversationData[NumOfFeedback] = 0;
+//            session.replaceDialog('getFeedback');
+//        } else {
+//            session.privateConversationData[NumOfFeedback]++;
+//            session.replaceDialog('menu2');            
+//        }
+//    }
+//]).triggerAction({
+//    matches: /^(main menu)|(menu)|(begin)|(Let\'s get started)$/i
+//});
 
 bot.dialog('byemenu', [
     function (session) {
@@ -318,7 +318,7 @@ bot.dialog('Feedback', [
 
 
 // R - menu
-bot.dialog('menu2', [
+bot.dialog('menu', [
     function (session) {
         trackBotEvent(session, 'menu', 0);
         
@@ -344,7 +344,9 @@ bot.dialog('menu2', [
         session.send(DefaultMaxRetryErrorPrompt);
         session.replaceDialog('menu');
     }
-]);
+]).triggerAction({
+    matches: /^(main menu)|(menu)|(begin)|(Let\'s get started)$/i
+});
 
 
 // R.0 - menu|Prepaid
@@ -484,6 +486,7 @@ bot.dialog('PostpaidPlans', [
             .attachments([
                 new builder.HeroCard(session)
                 .title('Digi Postpaid 150 Infinite')
+                .subtitle('No caps on everything from Internet, Calls and Tethering')
                 .images([ builder.CardImage.create(session, imagedir + '/images/Postpaid-Infinite.jpg') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=DGI150&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=NL&_ga=1.164776316.2103412470.1490767162', 'Buy Now'),
@@ -494,6 +497,7 @@ bot.dialog('PostpaidPlans', [
                 ]),
                 new builder.HeroCard(session)
                 .title('Digi Postpaid 50')
+                .subtitle('RM50/month for 10GB Internet, 5GB Weekend Internet & 100 mins calls to all network')
                 .images([ builder.CardImage.create(session, imagedir + '/images/Postpaid-50.jpg') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=10201VPA&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=NL&_ga=1.239507461.769883286.1492574194', 'Buy Now'),
@@ -504,6 +508,7 @@ bot.dialog('PostpaidPlans', [
                 ]),
                 new builder.HeroCard(session)
                 .title('Digi Postpaid 80')
+                .subtitle('RM80/month for 20GB Internet, 10GB Weekend Internet & unlimited calls to all network')
                 .images([ builder.CardImage.create(session, imagedir + '/images/Postpaid-80.jpg') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=10200VP_EX&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=NL&_ga=1.65621101.2103412470.1490767162', 'Buy Now'),
@@ -514,6 +519,7 @@ bot.dialog('PostpaidPlans', [
                 ]),
                 new builder.HeroCard(session)
                 .title('Digi Postpaid 110')
+                .subtitle('RM110/month for 25GB Internet, UNLIMITED Weekend Internet & unlimited calls to all network')
                 .images([ builder.CardImage.create(session, imagedir + '/images/Postpaid-110.jpg') ])
                 .buttons([
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=10202VP_EX&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=NL&_ga=1.92479582.2103412470.1490767162', 'Buy Now'),
@@ -996,7 +1002,7 @@ bot.dialog('OtherQuestions', [
                 .title('MyDigi App')
                 .text('An app to manage all your account needs. Find out how to use it. It\'s really easy!')
                 .buttons([
-                    builder.CardAction.imBack(session, "MyDigi App", "Reqdy?")
+                    builder.CardAction.imBack(session, "MyDigi App", "Ready?")
                 ]),
                         
                 new builder.HeroCard(session)
@@ -1065,9 +1071,13 @@ bot.dialog('GetAccountNo', [
     function (session) {
         trackBotEvent(session, 'menu|OtherQuestions|AllAboutMyAccount|GetAccountNo',1);
 
-        session.send("Your account number is available on your bill at the top right hand corner. Eg: 1.356XXXX");
-        
-		
+        var respCards = new builder.Message(session)
+            .attachments([
+                new builder.HeroCard(session)
+                .text('Your account number is available on your bill at the top right hand corner. Eg: 1.356XXXX')
+                .images([ builder.CardImage.create(session, imagedir + '/images/FAQ-Account-No.png') ])
+            ]);
+        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries_SingleMenu, retryPrompt:DefaultErrorPrompt});		
     },
     function (session, results) {
         session.replaceDialog('menu');
@@ -1101,11 +1111,11 @@ bot.dialog('WhatIsMyPuk', [
                 .images([ builder.CardImage.create(session, imagedir + '/images/FAQ-PUK-step3.png') ])
             ]);
 //		session.send(respCards);
-//		builder.Prompts.choice(session, "Is this information helpful?", "Yes|No", {listStyle:builder.ListStyle.}
+//		builder.Prompts.choice(session, "Is this information helpful?", "Yes|No", { listStyle:builder.ListStyle.button, maxRetries:MaxRetries_SingleMenu, retryPrompt:DefaultErrorPrompt});
         builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries_SingleMenu, retryPrompt:DefaultErrorPrompt});
     },
     function (session, results) {
-        session.send(DefaultMaxRetryErrorPrompt)
+        session.send("Thanks for your feedback");
         session.replaceDialog('menu');
     }
 ]).triggerAction({

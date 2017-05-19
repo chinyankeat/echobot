@@ -119,8 +119,7 @@ lib.dialog('/prompts', [
         builder.Prompts.number(session, "Prompts.number()\n\nNow enter a number.");
     },
     function (session, results) {
-        session.send("You entered '%s'", results.response);
-        session.endDialog(msg);
+        session.endDialog("You entered '%s'", results.response);
     }
 ]);		
 		

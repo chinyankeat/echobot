@@ -66,14 +66,15 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 }
 .wc-popup-window {
   height: 300px;
-  width: 370px;
+  width: 360px;
+  top: 50%;
+  left: 50%;
+  margin-top: -150px;
+  margin-left: -180px;
   background-color: #ffcc33;	
   box-shadow: 1px 2px 10px rgba(100, 100, 100, .3);
   position:fixed;
-  transform: translate(-50%, -50%);
   font-family: 'Segoe UI', sans-serif;
-  top: 50%;
-  left: 50%;
   text-align: center;
   font-size: 23px;
 }
