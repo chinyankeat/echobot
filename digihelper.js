@@ -1,7 +1,7 @@
 "use strict";
 
 $( document ).ready(function() {
-    $("#wc-popup-feedback").fadeIn(150);
+//    $("#wc-popup-feedback").fadeIn(150);
 });
 
 
