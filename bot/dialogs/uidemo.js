@@ -83,7 +83,7 @@ lib.dialog('/', [
 
 lib.dialog('/menu', [
     function (session) {
-        builder.Prompts.choice(session, "What demo would you like to run?", "prompts|picture|cards|list|carousel|receipt|actions|(quit)");
+        builder.Prompts.choice(session, "What demo would you like to run?", "prompts|button|picture|cards|list|carousel|receipt|actions|(quit)");
     },
     function (session, results) {
         if (results.response && results.response.entity != '(quit)') {
@@ -120,6 +120,12 @@ lib.dialog('/prompts', [
     },
     function (session, results) {
         session.send("You entered '%s'", results.response);
+        session.endDialog(msg);
+    }
+]);		
+		
+lib.dialog('/button', [
+    function (session) {
         session.send("Bot Builder includes a rich choice() prompt that lets you offer a user a list choices to pick from. On Facebook these choices by default surface using Quick Replies if there are 10 or less choices. If there are more than 10 choices a numbered list will be used but you can specify the exact type of list to show using the ListStyle property.");
         builder.Prompts.choice(session, "Prompts.choice()\n\nChoose a list style (the default is auto.)", "auto|inline|list|button|none");
     },
