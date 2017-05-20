@@ -248,7 +248,7 @@ bot.dialog('intro', [
 bot.dialog('byemenu', [
     function (session) {
         session.send("Bye for now.");
-        session.send("Thanks for using Yellow");
+        session.send("Thanks for using Yello");
         session.send("You can always press \"Main Menu\" button above to start over");
             }
 ]).triggerAction({
@@ -340,19 +340,19 @@ bot.dialog('menu', [
 		;
 		session.send(respCards);
 
-		var msg123 = new builder.Message(session)
-            .text("Thank you for expressing interest in our premium golf shirt! What color of shirt would you like?")
-            .suggestedActions([
-                    builder.CardAction.imBack(session, "Prepaid", "Prepaid"),
-                    builder.CardAction.imBack(session, "Postpaid", "Postpaid")
-            ]);
-        session.send(msg123);		
+//		var msg123 = new builder.Message(session)
+//            .text("Thank you for expressing interest in our premium golf shirt! What color of shirt would you like?")
+//            .suggestedActions([
+//                    builder.CardAction.imBack(session, "Prepaid", "Prepaid"),
+//                    builder.CardAction.imBack(session, "Postpaid", "Postpaid")
+//            ]);
+//        session.send(msg123);		
 		
-//        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
-//    },
-//    function (session, results) {
-//        session.send(DefaultMaxRetryErrorPrompt);
-//        session.replaceDialog('menu');
+        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
+    },
+    function (session, results) {
+        session.send(DefaultMaxRetryErrorPrompt);
+        session.replaceDialog('menu');
     }
 ]).triggerAction({
     matches: /^(main menu)|(menu)|(begin)|(Let\'s get started)$/i
@@ -1712,7 +1712,7 @@ bot.dialog('SmallTalk1', [
     function (session) {
         trackBotEvent(session, 'smalltalk',1);
 
-        session.send("Hi, I'm Yellow, Digi's virtual assistant");
+        session.send("Hi, I'm Yello, Digi's virtual assistant");
     }
 ]).triggerAction({
     matches: /(hi)|(hello)|(are you)|(name)|(call you)/i

@@ -5980,7 +5980,7 @@
                 return i.createElement("div", {
                     className: u.classList("wc-message-pane", e.activityWithSuggestedActions && "show-actions")
                 }, e.children, i.createElement("div", {
-                    className: "wc-suggested-actions"
+                    id: "wc-suggested-actions-id", className: "wc-suggested-actions"
                 }, i.createElement(l, o.__assign({}, e))))
             },
             l = function (e) {
@@ -6059,27 +6059,18 @@
                     var e = this,
                         t = "wc-console";
                     
-                    var newTH = document.createElement('button');
-					newTH.id = 'wc-header-menu-id';
-                    newTH.className = 'wc-header-menu';
-                    newTH.innerHTML = 'Main Menu';
-                    newTH.onclick = function () {
-                        return e.onClickHome()
-                    };
-					
-//					var newFeedback = document.createElement('div');
-//					newFeedback.className = 'rating-icon';
-//					newFeedback.innerHTML = 'feedback';
-//                    newFeedback.onclick = function () {
-//						$("#wc-popup-feedback").css("z-index", "4");
-//						$('#wc-popup-feedback').show();
-//                    };
-//					
-                    
-					// Create Main Menu Button
-                    var element = document.getElementById("start-over-menu");
+                    var element = document.getElementById("wc-suggested-actions-id");
                     var header_menu_element = document.getElementById("wc-header-menu-id");
                     if(element && header_menu_element==null) { 
+						var newTH = document.createElement('button');
+						newTH.id = 'wc-header-menu-id';
+						newTH.className = 'wc-header-menu';
+						newTH.innerHTML = 'Main Menu';
+						newTH.onclick = function () {
+							return e.onClickHome()
+						};
+					
+					// Create Main Menu Button
                         element.appendChild(newTH);
 //                        element.appendChild(newFeedback);
                     }
