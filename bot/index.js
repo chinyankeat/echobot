@@ -339,23 +339,20 @@ bot.dialog('menu', [
                 ])])
 		;
 		session.send(respCards);
-		
-var msg = new builder.Message(session)
+
+		var msg123 = new builder.Message(session)
             .text("Thank you for expressing interest in our premium golf shirt! What color of shirt would you like?")
             .suggestedActions([
                     builder.CardAction.imBack(session, "Prepaid", "Prepaid"),
-                    builder.CardAction.imBack(session, "Postpaid", "Postpaid"),
-                    builder.CardAction.imBack(session, "Broadband", "Broadband"),
-                    builder.CardAction.imBack(session, "Roaming", "Roaming"),
-                    builder.CardAction.imBack(session, "Other Questions", "Other Questions")
+                    builder.CardAction.imBack(session, "Postpaid", "Postpaid")
             ]);
-        session.send(msg);		
+        session.send(msg123);		
 		
 //        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
-    },
-    function (session, results) {
-        session.send(DefaultMaxRetryErrorPrompt);
-        session.replaceDialog('menu');
+//    },
+//    function (session, results) {
+//        session.send(DefaultMaxRetryErrorPrompt);
+//        session.replaceDialog('menu');
     }
 ]).triggerAction({
     matches: /^(main menu)|(menu)|(begin)|(Let\'s get started)$/i
