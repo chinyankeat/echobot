@@ -221,7 +221,7 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
         background-color: #fff;
         color: #3a96dd;
         min-height: 32px;
-        overflow: hidden;
+        overflow: inherit;
         padding: 0 10px;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -235,23 +235,6 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
         background-color: #3a96dd;
         border-color: #3a96dd;
         color: #fff; }
-/*  .wc-suggested-actions button.scroll {
-    background-color: #d2dde5;
-    height: 40px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    top: 0;
-    width: 28px; }
-  .wc-suggested-actions button.scroll:disabled {
-    display: none; }
-  .wc-suggested-actions button.scroll:hover {
-    background-color: #808c95; }
-
-
-*/
-
-
   .wc-suggested-actions button.scroll {
     background-color: #FFE227;    /* Modified by Chin 3 May 2017 */
     height: 28px;
@@ -266,7 +249,11 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   .wc-suggested-actions button.scroll:hover {
     background-color: #0073de; }
 
-
+  .wc-suggested-actions .wc-hscroll-outer {
+  /* allow horizontal scrolling but hide the scrollbar */
+    overflow: hidden;
+    width: 330px;
+    margin: auto;}
 
   .wc-suggested-actions button.scroll svg {
     fill: #fff; }
@@ -499,9 +486,7 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 /* horizontal scroll */
 .wc-hscroll-outer {
   /* allow horizontal scrolling but hide the scrollbar */
-  overflow: hidden;
-  width: 330px;
-  margin: auto;}
+  overflow: hidden;}
 
 .wc-hscroll {
   /* allow horizontal scrolling but hide the scrollbar */

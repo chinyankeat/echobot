@@ -1101,8 +1101,8 @@ bot.dialog('GetAccountNo', [
 			.suggestedActions(
 				builder.SuggestedActions.create(
 					session,[
-						builder.CardAction.imBack(session, "Yes", "Yes"),
-						builder.CardAction.imBack(session, "No", "No")
+						builder.CardAction.imBack(session, "Yes", "\f005"),
+						builder.CardAction.imBack(session, "No", "<i class=\"fa fa-thumbs-o-up\" aria-hidden=\"true\"></i>")
 					]
 				)
 			);
@@ -1150,8 +1150,6 @@ bot.dialog('WhatIsMyPuk', [
                 .subtitle('Swipe left to select SIM and you will find your PUK code')
                 .images([ builder.CardImage.create(session, imagedir + '/images/FAQ-PUK-step3.png') ])
             ]);
-//		session.send(respCards);
-//		builder.Prompts.choice(session, "Is this information helpful?", "Yes|No", { listStyle:builder.ListStyle.button, maxRetries:MaxRetries_SingleMenu, retryPrompt:DefaultErrorPrompt});
         builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries_SingleMenu, retryPrompt:DefaultErrorPrompt});
     },
     function (session, results) {
