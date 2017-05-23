@@ -47,8 +47,10 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   margin-top: 4px;
 }
 .wc-header-menu {
-  margin-left: 40px;
-  float: left;
+  /*margin-left: 40px;          /* for main menu at bottom*/
+  /*float: left;                /* for main menu at bottom*/
+  position: absolute;
+  right: 10px;
 }
 .wc-header-menu:hover {
   background-color: #0073de;
@@ -170,7 +172,8 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
   margin-bottom: 10px; }
 
 .wc-message-groups {
-  bottom: 90px;		/* change back to 50px to remove main menu bar*/
+  /*bottom: 90px;		/* change back to 90px to for main menu bar at bottom*/
+  bottom: 50px;		/*Original value*/
   left: 0;
   transform: translateY(0);
   overflow-x: hidden;
@@ -200,7 +203,8 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 .wc-suggested-actions {
   background-color: #ffffff;
   bottom: 50px;
-  height: 35px;			/*change back to 0 to remove main menu*/
+  /*height: 35px;			change back to 0 for main menu bar*/
+  height: 0;			/*original value 0 to remove main menu*/
   left: 0;
   overflow: hidden;
   position: absolute;
@@ -218,9 +222,10 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
         color: #3a96dd;
         min-height: 32px;
         overflow: hidden;
-        padding: 0 16px;
+        padding: 0 10px;
         text-overflow: ellipsis;
         white-space: nowrap;
+		border-radius: 10px;
         width: 100%; }
       .wc-suggested-actions .wc-hscroll > ul > li button:hover {
         background-color: #fff;
@@ -230,7 +235,7 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
         background-color: #3a96dd;
         border-color: #3a96dd;
         color: #fff; }
-  .wc-suggested-actions button.scroll {
+/*  .wc-suggested-actions button.scroll {
     background-color: #d2dde5;
     height: 40px;
     overflow: hidden;
@@ -242,14 +247,35 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
     display: none; }
   .wc-suggested-actions button.scroll:hover {
     background-color: #808c95; }
+
+
+*/
+
+
+  .wc-suggested-actions button.scroll {
+    background-color: #FFE227;    /* Modified by Chin 3 May 2017 */
+    height: 28px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    top: 6px;
+    width: 28px; 
+    border: 0px;}
+  .wc-suggested-actions button.scroll:disabled {
+    display: none; }
+  .wc-suggested-actions button.scroll:hover {
+    background-color: #0073de; }
+
+
+
   .wc-suggested-actions button.scroll svg {
     fill: #fff; }
     .wc-suggested-actions button.scroll svg path {
-      transform: translateY(6px); }
+      transform: translateY(0px); }
   .wc-suggested-actions button.scroll.previous {
-    left: 0; }
+    left: 5px; }
   .wc-suggested-actions button.scroll.next {
-    right: 0; }
+    right: 5px; }
 
 .wc-message-pane.show-actions .wc-message-groups {
   transform: translateY(-40px); }
@@ -473,7 +499,9 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 /* horizontal scroll */
 .wc-hscroll-outer {
   /* allow horizontal scrolling but hide the scrollbar */
-  overflow: hidden; }
+  overflow: hidden;
+  width: 330px;
+  margin: auto;}
 
 .wc-hscroll {
   /* allow horizontal scrolling but hide the scrollbar */

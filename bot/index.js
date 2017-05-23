@@ -354,11 +354,7 @@ bot.dialog('menu', [
                 )
             );
 		session.send(msg);
-//        builder.Prompts.choice(session, msg, ["Prepaid", "Postpaid", "Broadband", "Roaming", "Other Questions"]);
-	},
-function(session, results) {
-	session.send('I like ' +  results.response.entity + ' too!');
-}
+	}
 //        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
 //    },
 //    function (session, results) {
@@ -1080,7 +1076,7 @@ bot.dialog('AllAboutMyAccount', [
         builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
     },
     function (session, results) {
-        session.send(DefaultMaxRetryErrorPrompt)
+        session.send(DefaultMaxRetryErrorPrompt);
         session.replaceDialog('menu');
     }
 ]).triggerAction({
@@ -1098,10 +1094,33 @@ bot.dialog('GetAccountNo', [
                 .text('Your account number is available on your bill at the top right hand corner. Eg: 1.356XXXX')
                 .images([ builder.CardImage.create(session, imagedir + '/images/FAQ-Account-No.png') ])
             ]);
-        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries_SingleMenu, retryPrompt:DefaultErrorPrompt});		
-    },
-    function (session, results) {
-        session.replaceDialog('menu');
+		session.send(respCards);
+		
+		var respCards = new builder.Message(session)
+			.text("Is this information helpful for you?")
+			.suggestedActions(
+				builder.SuggestedActions.create(
+					session,[
+						builder.CardAction.imBack(session, "Yes", "Yes"),
+						builder.CardAction.imBack(session, "No", "No")
+					]
+				)
+			);
+		session.send(respCards);
+	},
+    function(session, results) {
+        switch (results.response.index) {
+            case 0:
+                trackBotEvent(session,'menu|OtherQuestions|AllAboutMyAccount|GetAccountNo|Yes',1,0);
+                break;
+            case 1:
+                trackBotEvent(session,'menu|OtherQuestions|AllAboutMyAccount|GetAccountNo|No',1,0);
+                break;
+			default:
+				session.send(DefaultMaxRetryErrorPrompt);
+				session.replaceDialog('menu');
+				break;
+		}
     }
 ]).triggerAction({
     matches: /(Account No)|(Acc No)|(How to get my acc no)/i
