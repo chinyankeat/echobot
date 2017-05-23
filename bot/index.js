@@ -1107,14 +1107,18 @@ bot.dialog('GetAccountNo', [
 				)
 			);
 		session.send(respCards);
-	},
+	},endDialog
     function(session, results) {
         switch (results.response.index) {
             case 0:
                 trackBotEvent(session,'menu|OtherQuestions|AllAboutMyAccount|GetAccountNo|Yes',1,0);
+				session.send("Thanks for your feedback");
+				session.endDialog();
                 break;
             case 1:
                 trackBotEvent(session,'menu|OtherQuestions|AllAboutMyAccount|GetAccountNo|No',1,0);
+				session.send("Thanks for your feedback. We will improve");
+				session.endDialog();
                 break;
 			default:
 				session.send(DefaultMaxRetryErrorPrompt);
