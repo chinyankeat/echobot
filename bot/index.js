@@ -295,26 +295,26 @@ bot.dialog('ContactCustomerService', [
     matches: /(Customer Service)|(email)/i
 });
 
-bot.dialog('Feedback', [
-    function (session) {
-        var respCards = new builder.Message(session)
-            .attachmentLayout(builder.AttachmentLayout.carousel)
-            .attachments([
-                new builder.HeroCard(session)
-                .title('Feedback Form (Internal Testing use only)')
-                .subtitle('Thanks for your participation. We would appreciate your feedback')
-                .buttons([
-                    builder.CardAction.openUrl(session, 'https://goo.gl/forms/giIkIYVHLxL8l2ob2', 'My Feedback')
-                ])
-            ]);
-        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle: builder.ListStyle.button });
-    },
-    function (session, results) {
-        session.replaceDialog('menu');
-    },
-]).triggerAction({
-    matches: /^(Feedback)$/i
-});
+//bot.dialog('Feedback', [
+//    function (session) {
+//        var respCards = new builder.Message(session)
+//            .attachmentLayout(builder.AttachmentLayout.carousel)
+//            .attachments([
+//                new builder.HeroCard(session)
+//                .title('Feedback Form (Internal Testing use only)')
+//                .subtitle('Thanks for your participation. We would appreciate your feedback')
+//                .buttons([
+//                    builder.CardAction.openUrl(session, 'https://goo.gl/forms/giIkIYVHLxL8l2ob2', 'My Feedback')
+//                ])
+//            ]);
+//        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle: builder.ListStyle.button });
+//    },
+//    function (session, results) {
+//        session.replaceDialog('menu');
+//    },
+//]).triggerAction({
+//    matches: /^(Feedback)$/i
+//});
 
 
 // R - menu
@@ -325,35 +325,46 @@ bot.dialog('menu', [
         // Store new unique ID for this conversation's Dialog
         session.privateConversationData[DialogId] = session.message.address.id;
         
-        var respCards = new builder.Message(session)
-            .attachmentLayout(builder.AttachmentLayout.carousel)
-            .attachments([
-                new builder.HeroCard(session)
-                .text('Just click on any of the below and let\'s get started.')
-                .buttons([
-                    builder.CardAction.imBack(session, "Prepaid", "Prepaid"),
-                    builder.CardAction.imBack(session, "Postpaid", "Postpaid"),
-                    builder.CardAction.imBack(session, "Broadband", "Broadband"),
-                    builder.CardAction.imBack(session, "Roaming", "Roaming"),
-                    builder.CardAction.imBack(session, "Other Questions", "Other Questions")
-                ])])
-		;
-		session.send(respCards);
-
-//		var msg123 = new builder.Message(session)
-//            .text("Thank you for expressing interest in our premium golf shirt! What color of shirt would you like?")
-//            .suggestedActions([
+//        var respCards = new builder.Message(session)
+//            .attachmentLayout(builder.AttachmentLayout.carousel)
+//            .attachments([
+//                new builder.HeroCard(session)
+//                .text('Just click on any of the below and let\'s get started.')
+//                .buttons([
 //                    builder.CardAction.imBack(session, "Prepaid", "Prepaid"),
-//                    builder.CardAction.imBack(session, "Postpaid", "Postpaid")
-//            ]);
-//        session.send(msg123);		
-		
-        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
-    },
-    function (session, results) {
-        session.send(DefaultMaxRetryErrorPrompt);
-        session.replaceDialog('menu');
-    }
+//                    builder.CardAction.imBack(session, "Postpaid", "Postpaid"),
+//                    builder.CardAction.imBack(session, "Broadband", "Broadband"),
+//                    builder.CardAction.imBack(session, "Roaming", "Roaming"),
+//                    builder.CardAction.imBack(session, "Other Questions", "Other Questions")
+//                ])])
+//		;
+//
+//		session.send(respCards);
+        var msg = new builder.Message(session)
+            .text("Just click on any of the below and let\'s get started.")
+            .suggestedActions(
+                builder.SuggestedActions.create(
+                    session,[
+                        builder.CardAction.imBack(session, "Prepaid", "Prepaid"),
+                        builder.CardAction.imBack(session, "Postpaid", "Postpaid"),
+                        builder.CardAction.imBack(session, "Broadband", "Broadband"),
+                        builder.CardAction.imBack(session, "Roaming", "Roaming"),
+                        builder.CardAction.imBack(session, "Other Questions", "Other Questions")
+                    ]
+                )
+            );
+		session.send(msg);
+//        builder.Prompts.choice(session, msg, ["Prepaid", "Postpaid", "Broadband", "Roaming", "Other Questions"]);
+	},
+function(session, results) {
+	session.send('I like ' +  results.response.entity + ' too!');
+}
+//        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
+//    },
+//    function (session, results) {
+//        session.send(DefaultMaxRetryErrorPrompt);
+//        session.replaceDialog('menu');
+//    }
 ]).triggerAction({
     matches: /^(main menu)|(menu)|(begin)|(Let\'s get started)$/i
 });
@@ -1624,7 +1635,7 @@ bot.dialog('TalkTimeTransfer', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Talk Time Transfer)|(How do I do a talk-time transfer)/i
+    matches: /(Talk Time Transfer)|(How do I do a talk-time transfer)|(?=.*\btalk\b)(?=.*\btalk\b)(?=.*\btransfer\b).*$/i
 });
 
 // R.4.3 - menu|OtherQuestions|ChargesOrBilling
@@ -1694,6 +1705,194 @@ bot.dialog('ChangeBillingCycle', [
 ]).triggerAction({
     matches: /(Change Billing Cycle)|(Can I change my billing cycle)|(bill cycle)/i
 });
+
+
+// R.MyDigi.Intro
+bot.dialog('MyDigiIntro', [
+    function (session) {
+        trackBotEvent(session, 'menu|MyDigi|Intro',1);
+
+        session.send("When you start MyDigi, you will see these screens on your current usages");
+        var respCards = new builder.Message(session)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+                new builder.HeroCard(session)
+				.title("Screen 1/4")
+				.text("This page shows Balance(Prepaid plan) or Billed amount (Postpaid plan)")
+                .images([ builder.CardImage.create(session, imagedir + '/images/MyDigi-Intro-Page1.png') ])
+
+                ,new builder.HeroCard(session)
+				.title("Screen 2/4")
+				.text("This page Shows total Internet quota available. Click on “View Details” to see all quota")
+                .images([ builder.CardImage.create(session, imagedir + '/images/MyDigi-Intro-Page2.png') ])
+//                .CardAction.imBack(session, 'Internet Quota Details', 'View Details')
+				
+                ,new builder.HeroCard(session)
+				.title("Screen 3/4")
+				.text("Shows total voice quota available with your plan. If balance is 0, normal call rates apply")
+                .images([ builder.CardImage.create(session, imagedir + '/images/MyDigi-Intro-Page3.png') ])
+
+                ,new builder.HeroCard(session)
+				.title("Screen 4/4")
+				.text("Shows total SMS available with your plan. If balance is 0, SMS rates apply")
+                .images([ builder.CardImage.create(session, imagedir + '/images/MyDigi-Intro-Page4.png') ])
+				
+            ]);
+        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
+    },
+    function (session, results) {
+        session.send(DefaultMaxRetryErrorPrompt)
+        session.replaceDialog('menu');
+    }
+]).triggerAction({
+	// Match question with 2 words in any order: 	MyDigi + intro		MyDigi + Start 
+    matches: /^(?=.*\bmydigi\b)(?=.*\bintro\b)|(?=.*\bmydigi\b)(?=.*\bstart\b).*$/i
+});
+
+// R.MyDigi.Intro
+bot.dialog('MyDigiNotification', [
+    function (session) {
+        trackBotEvent(session, 'menu|MyDigi|Notification',1);
+
+        session.send("Notifications will be sent when Freebies redeemed OR Prepaid credit balance low (<RM2) OR Prepaid validity expired OR Postpaid bill past due. Here is how you can view your notification");
+        var respCards = new builder.Message(session)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+                new builder.HeroCard(session)
+				.title("Step 1")
+				.text("At MyDigi app, click on bell icon to open notifications tab ")
+                .images([ builder.CardImage.create(session, imagedir + '/images/MyDigi-Notification-Page1.png') ])
+
+                ,new builder.HeroCard(session)
+				.title("Step 2")
+				.text("To close the notification tab, click on bell icon or swipe to the right")
+                .images([ builder.CardImage.create(session, imagedir + '/images/MyDigi-Notification-Page2.png') ])
+				
+            ]);
+        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
+    },
+    function (session, results) {
+        session.send(DefaultMaxRetryErrorPrompt)
+        session.replaceDialog('menu');
+    }
+]).triggerAction({
+	// Match question with 2 words in any order: 	MyDigi + intro		MyDigi + Start 
+    matches: /^(notification)|(?=.*\bmydigi\b)(?=.*\balert\b).*$/i
+});
+
+// R.MyDigi.Intro
+bot.dialog('MyDigiBillPayment', [
+    function (session) {
+        trackBotEvent(session, 'menu|MyDigi|BillPayment',1);
+
+        session.send("For Postpaid users, here is how you can make Bill Payment using MyDigi");
+        var respCards = new builder.Message(session)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+                new builder.HeroCard(session)
+				.title("Step 1 of 3")
+				.text("At MyDigi app, click on Pay Bill")
+                .images([ builder.CardImage.create(session, imagedir + '/images/MyDigi-Bill-Payment-Page1.png') ])
+
+                ,new builder.HeroCard(session)
+				.title("Step 2 of 3")
+				.text("On this page, enter the amount you want to pay, email address and the press Pay Bill")
+                .images([ builder.CardImage.create(session, imagedir + '/images/MyDigi-Bill-Payment-Page234.png') ])
+				
+                ,new builder.HeroCard(session)
+				.title("Step 3 of 3")
+				.text("We will then bring you to payment page. Fill in payment details to complete the payment")
+                .images([ builder.CardImage.create(session, imagedir + '/images/MyDigi-Bill-Payment-Page5.png') ])
+				
+            ]);
+        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
+    },
+    function (session, results) {
+        session.send(DefaultMaxRetryErrorPrompt)
+        session.replaceDialog('menu');
+    }
+]).triggerAction({
+	// Match question with 2 words in any order: 	MyDigi + intro		MyDigi + Start 
+    matches: /^(bill)|(?=.*\bmydigi\b)(?=.*\bbill\b).*$|(?=.*\bpay\b)(?=.*\bill\b).*$/i
+});
+
+// R.MyDigi.Intro
+bot.dialog('MyDigiReloadOnline', [
+    function (session) {
+        trackBotEvent(session, 'menu|MyDigi|ReloadOnline',1);
+
+        session.send("For Prepaid users, here is how you can reload using MyDigi with your Credit Card, Debit card or online banking");
+        var respCards = new builder.Message(session)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+                new builder.HeroCard(session)
+				.title("Step 1 of 4")
+				.text("At MyDigi app, click on Reload")
+                .images([ builder.CardImage.create(session, imagedir + '/images/MyDigi-Reload-Page1.png') ])
+
+                ,new builder.HeroCard(session)
+				.title("Step 2 of 4")
+				.text("Click on online, for reload with Credit Card, Debit Card or Online Banking")
+                .images([ builder.CardImage.create(session, imagedir + '/images/MyDigi-Reload-Page4.png') ])
+				
+                ,new builder.HeroCard(session)
+				.title("Step 3 of 4")
+				.text("Enter the reload amount, you email address and the press Reload")
+                .images([ builder.CardImage.create(session, imagedir + '/images/MyDigi-Reload-Page567.png') ])
+				
+                ,new builder.HeroCard(session)
+				.title("Step 4 of 4")
+				.text("We will then bring you to payment page. Fill in payment details to complete the reload")
+                .images([ builder.CardImage.create(session, imagedir + '/images/MyDigi-Bill-Payment-Page5.png') ])
+				
+            ]);
+        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
+    },
+    function (session, results) {
+        session.send(DefaultMaxRetryErrorPrompt)
+        session.replaceDialog('menu');
+    }
+]).triggerAction({
+	// Match question with 2 words in any order: 	MyDigi + intro		MyDigi + Start 
+    matches: /^(?=.*\breload\b)(?=.*\bonline\b).*$|(?=.*\breload\b)(?=.*\bcredit\b)(?=.*\bcard\b).*$|(?=.*\breload\b)(?=.*\batm\b).*$|(?=.*\breload\b)(?=.*\bbank\b).*$/i
+});
+
+// R.MyDigi.Intro
+bot.dialog('MyDigiReloadPin', [
+    function (session) {
+        trackBotEvent(session, 'menu|MyDigi|ReloadPin',1);
+
+        session.send("For Prepaid users, here is how you can reload using MyDigi with PIN or reload coupon");
+        var respCards = new builder.Message(session)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+                new builder.HeroCard(session)
+				.title("Step 1 of 3")
+				.text("At MyDigi app, click on Reload")
+                .images([ builder.CardImage.create(session, imagedir + '/images/MyDigi-Reload-Page1.png') ])
+
+                ,new builder.HeroCard(session)
+				.title("Step 2 of 3")
+				.text("Click on PIN")
+                .images([ builder.CardImage.create(session, imagedir + '/images/MyDigi-Reload-PIN-Page1.png') ])
+				
+                ,new builder.HeroCard(session)
+				.title("Step 3 of 3")
+				.text("Key in the 16 Digit PIN and press Reload")
+                .images([ builder.CardImage.create(session, imagedir + '/images/MyDigi-Reload-PIN-Page23.png') ])
+				
+            ]);
+        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
+    },
+    function (session, results) {
+        session.send(DefaultMaxRetryErrorPrompt)
+        session.replaceDialog('menu');
+    }
+]).triggerAction({
+	// Match question with 2 words in any order: 	MyDigi + intro		MyDigi + Start 
+    matches: /^(?=.*\breload\b)(?=.*\bpin\b).*$|(?=.*\breload\b)(?=.*\bcoupon\b).*$/i
+});
+
 
 //bot.dialog('NLP', [
 //// R - menu
