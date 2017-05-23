@@ -1107,7 +1107,7 @@ bot.dialog('GetAccountNo', [
 				)
 			);
 		session.send(respCards);
-	},endDialog
+	},
     function(session, results) {
         switch (results.response.index) {
             case 0:
