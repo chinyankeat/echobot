@@ -1101,8 +1101,8 @@ bot.dialog('GetAccountNo', [
 			.suggestedActions(
 				builder.SuggestedActions.create(
 					session,[
-						builder.CardAction.imBack(session, "Yes", "\f005"),
-						builder.CardAction.imBack(session, "No", "<i class=\"fa fa-thumbs-o-up\" aria-hidden=\"true\"></i>")
+						builder.CardAction.imBack(session, "Yes", "✓"),
+						builder.CardAction.imBack(session, "No", "✗")
 					]
 				)
 			);
