@@ -228,9 +228,9 @@ body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
 		border-radius: 10px;
         width: 100%; }
       .wc-suggested-actions .wc-hscroll > ul > li button:hover {
-        background-color: #fff;
+        background-color: #3a96dd;
         border-color: #3a96dd;
-        color: #3a96dd; }
+        color: #FFFFFF; }
       .wc-suggested-actions .wc-hscroll > ul > li button:active {
         background-color: #3a96dd;
         border-color: #3a96dd;

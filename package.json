@@ -22,6 +22,7 @@
     "@types/express": "^4.0.33",
     "@types/node": "^6.0.45",
     "@types/node-fetch": "0.0.4",
+    "apiai": "^4.0.2",
     "applicationinsights": "^0.19.0",
     "body-parser": "^1.15.2",
     "botbuilder": "^3.8.3",

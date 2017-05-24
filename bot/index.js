@@ -15,6 +15,10 @@ var request = require("request");
 var emoji = require('node-emoji');
 
 
+var apiai = require('apiai'); 
+var apiai_app = apiai(process.env.APIAI_CLIENT_ACCESS_TOKEN);
+
+
 ////////////////////////////////////////////////////////////////////////////
 // Global Variables
 // Session Data
@@ -292,7 +296,7 @@ bot.dialog('ContactCustomerService', [
         session.replaceDialog('menu');
     }		
 ]).triggerAction({
-    matches: /(Customer Service)|(email)/i
+    matches: /.*(Customer Service).*|.*(email).*/i
 });
 
 //bot.dialog('Feedback', [
@@ -365,7 +369,6 @@ bot.dialog('menu', [
     matches: /^(main menu)|(menu)|(begin)|(Let\'s get started)$/i
 });
 
-
 // R.0 - menu|Prepaid
 bot.dialog('Prepaid', [
     function (session) {
@@ -410,7 +413,7 @@ bot.dialog('Prepaid', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Prepaid)|(reload)|(add on)|(addon)/i
+    matches: /(Prepaid)|.*(reload).*|.*(add on).*|.*(addon).*/i
 });
 
 // R.0.0 - menu|Prepaid|PrepaidPlans
@@ -447,7 +450,7 @@ bot.dialog('PrepaidPlans', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Prepaid Plans)|(prepaid live)|(prepaid best)/i
+    matches: /.*(Prepaid Plans).*|.*(prepaid live).*|.*(prepaid best).*/i
 });
 
 
@@ -488,7 +491,7 @@ bot.dialog('Postpaid', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Postpaid)|(postpaid extra)|(latest)|(recommended)/i
+    matches: /(Postpaid)|.*(postpaid extra).*/i
 });
 
 // R.1.0 - menu|Postpaid|PostpaidPlans
@@ -510,7 +513,6 @@ bot.dialog('PostpaidPlans', [
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=DGI150&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=MNP&_ga=1.164776316.2103412470.1490767162', 'Port In'),
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=DGI150&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=COP&_ga=1.238199557.426176229.1488446290', 'Change from Prepaid'),
                     builder.CardAction.openUrl(session, 'http://new.digi.com.my/services/change-of-mobile-plans?changePlanName=Digi%20Postpaid%20150%20Infinite', 'Change from Postpaid')
-//                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
                 ]),
                 new builder.HeroCard(session)
                 .title('Digi Postpaid 50')
@@ -521,7 +523,6 @@ bot.dialog('PostpaidPlans', [
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=10201VPA&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=MNP&_ga=1.155287800.2103412470.1490767162', 'Port In'),
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=10201VPA&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&_ga=1.64925487.1200425632.1479720347Postpaid&orderType=COP', 'Change from Prepaid'),
                     builder.CardAction.openUrl(session, 'http://new.digi.com.my/services/change-of-mobile-plans?changePlanName=Digi%20Postpaid%2050', 'Change from Postpaid')
-//                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
                 ]),
                 new builder.HeroCard(session)
                 .title('Digi Postpaid 80')
@@ -532,7 +533,6 @@ bot.dialog('PostpaidPlans', [
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=10200VP_EX&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=MNP&_ga=1.92479582.2103412470.1490767162', 'Port In'),
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=10200VP_EX&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=COP', 'Change from Prepaid'),
                     builder.CardAction.openUrl(session, 'http://new.digi.com.my/services/change-of-mobile-plans?changePlanName=Digi%20Postpaid%2080', 'Change from Postpaid')
-//                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
                 ]),
                 new builder.HeroCard(session)
                 .title('Digi Postpaid 110')
@@ -543,7 +543,6 @@ bot.dialog('PostpaidPlans', [
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=10202VP_EX&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=MNP&_ga=1.94988767.2103412470.1490767162', 'Port In'),
                     builder.CardAction.openUrl(session, 'https://store.digi.com.my/storefront/product-config.ep?pID=10202VP_EX&isBundle=y&ppymttype=POSTPAID&ptype=VOICE&orderType=COP', 'Change from Prepaid'),
                     builder.CardAction.openUrl(session, 'http://new.digi.com.my/services/change-of-mobile-plans?changePlanName=Digi%20Postpaid%20110', 'Change from Postpaid')
-//                    builder.CardAction.imBack(session, "Main Menu", "Main Menu")
                 ])
             ]);
         builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});        
@@ -553,7 +552,7 @@ bot.dialog('PostpaidPlans', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Postpaid Plans)|(infinite)|(postpaid 110)|(postpaid 50)|(postpaid 80)/i
+    matches: /.*(Postpaid Plans).*|(infinite).*|.*(postpaid 110).*|.*(postpaid 50)|.*(postpaid 80).*|.*(latest).*|.*(recommended).*/i
 });
 
 
@@ -638,7 +637,7 @@ bot.dialog('BroadbandPlans', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Broadband Plans)|(broadband 30)|(broadband 60)|(broadband 100)/i
+    matches: /.*(Broadband Plans).*|.*(broadband 30).*|.*(broadband 60).*|.*(broadband 100).*/i
 });
 
 
@@ -700,7 +699,7 @@ bot.dialog('Roaming', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Roaming)|(roam)|(idd)|(133)|(overseas)|(travel)/i
+    matches: /(Roaming)|.*(roam).*|.*(idd).*|.*(133).*|.*(overseas).*|.*(travel).*/i
 });
 
 // R.3.0 - menu|Roaming|RoamingPlans
@@ -745,7 +744,7 @@ bot.dialog('RoamingPlans', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Roaming Plans)|(roam like home)|(roam pass)/i
+    matches: /.*(Roaming Plans).*|.*(roam like home).*|.*(roam pass).*/i
 });
 
 // R.3.1 - menu|Roaming|RoamingTips
@@ -797,7 +796,7 @@ bot.dialog('RoamingTips', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Roaming Tips)|(data roaming)/i
+    matches: /.*(Roaming Tips).*|.*(data roaming).*/i
 });
 
 // R.3.1.0 - menu|Roaming|RoamingTips|ActivateRoamingOver6Months
@@ -823,7 +822,7 @@ bot.dialog('ActivateRoamingOver6Months', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(More than 6)/i
+    matches: /.*(More than 6).*/i
 });
 
 // R.3.1.1 - menu|Roaming|RoamingTips|ActivateRoamingBelow6Months
@@ -845,7 +844,7 @@ bot.dialog('ActivateRoamingBelow6Months', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Less than 6)/i
+    matches: /.*(Less than 6).*/i
 });
 
 // R.3.1.2 - menu|Roaming|RoamingTips|iOSDataRoaming
@@ -868,7 +867,7 @@ bot.dialog('iOSDataRoaming', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(iOS Data Roaming)/i
+    matches: /.*(iOS Data Roaming).*/i
 });
 
 // R.3.1.3 - menu|Roaming|RoamingTips|AndroidDataRoaming
@@ -894,7 +893,7 @@ bot.dialog('AndroidDataRoaming', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Android Data Roaming)/i
+    matches: /.*(Android Data Roaming).*/i
 });
 
 // R.3.1.4 - menu|Roaming|RoamingTips|SubscribeRoamingPass
@@ -930,7 +929,7 @@ bot.dialog('SubscribeRoamingPass', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Roaming Pass)|(roam pass)/i
+    matches: /.*(Roaming Pass).*|.*(roam pass).*/i
 });
 
 // R.3.1.5 - menu|Roaming|RoamingTips|MyDigiCheckRoamUsage
@@ -962,7 +961,7 @@ bot.dialog('MyDigiCheckRoamUsage', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(MyDigi Roam Usage Tracking)|(roam usage)|(overseas usage)/i
+    matches: /.*(MyDigi Roam Usage Tracking).*|.*(roam usage).*|.*(overseas usage).*/i
 });
 
 // R.3.1.6 - menu|Roaming|RoamingTips|UmbCheckRoamUsage
@@ -994,7 +993,7 @@ bot.dialog('UmbCheckRoamUsage', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(UMB Roam Usage Tracking)|(umb check roaming)/i
+    matches: /.*(UMB Roam Usage Tracking).*|.*(umb check roaming).*/i
 });
 
 
@@ -1043,7 +1042,7 @@ bot.dialog('OtherQuestions', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Frequently Asked Questions)|(faq)|(other question)/i
+    matches: /.*(Frequently Asked Questions).*|.*(faq).*|.*(other question).*/i
 });
 
 // R.4.0 - menu|OtherQuestions|AllAboutMyAccount
@@ -1080,7 +1079,7 @@ bot.dialog('AllAboutMyAccount', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(About My Account)|(account)|(my acc)/i
+    matches: /.*(About My Account).*/i
 });
 
 // R.4.0.0 - menu|OtherQuestions|AllAboutMyAccount|GetAccountNo
@@ -1098,7 +1097,7 @@ bot.dialog('GetAccountNo', [
 		session.replaceDialog("getInfoFeedback");		
     }
 ]).triggerAction({
-    matches: /(Account No)|(Acc No)|(How to get my acc no)/i
+    matches: /.*(Account No).*|.*(Acc No).*|.*(How to get my acc no).*/i
 });
 
 // R.4.0.1 - menu|OtherQuestions|AllAboutMyAccount|WhatIsMyPuk
@@ -1129,7 +1128,7 @@ bot.dialog('WhatIsMyPuk', [
 		session.replaceDialog("getInfoFeedback");		
     }
 ]).triggerAction({
-    matches: /(What Is My Puk)|(What is my PUK code)|(puk)/i
+    matches: /.*(What Is My Puk).*|.*(What is my PUK code).*|.*(puk).*/i
 });
 
 bot.dialog('WhatIsMyPuk2', [
@@ -1168,9 +1167,8 @@ bot.dialog('WhatIsMyPuk2', [
         session.send(DefaultMaxRetryErrorPrompt)
         session.replaceDialog('menu');
     }
-]).triggerAction({
-    matches: /(puk2)/i
-});
+]);
+
 // R.4.0.2 - menu|OtherQuestions|AllAboutMyAccount|ChangeMyAccOwnership
 bot.dialog('ChangeMyAccOwnership', [
     function (session) {
@@ -1181,7 +1179,7 @@ bot.dialog('ChangeMyAccOwnership', [
 		session.replaceDialog("getInfoFeedback");		
     }
 ]).triggerAction({
-    matches: /(Change My Account Ownership)|(acc ownership)|(account ownership)/i
+    matches: /.*(Change My Account Ownership).*|.*(acc ownership).*|.*(account ownership).*/i
 });
 
 // R.4.0.3 - menu|OtherQuestions|AllAboutMyAccount|CheckFnF
@@ -1212,7 +1210,7 @@ bot.dialog('CheckFnF', [
 		session.replaceDialog("getInfoFeedback");		
     }
 ]).triggerAction({
-    matches: /(Check FnF)|(Friends & Family)|(How to check F&F)|(friends and family)|(friend and family)|(friend family)|(friends family)|(F&F)/i
+    matches: /.*(Check FnF).*|.*(check Friends & Family).*|.*(How to check F&F).*|.*(friends and family).*|.*(friend and family).*|.*(friend family).*|.*(friends family).*/i
 });
 
 // R.4.0.5 - menu|OtherQuestions|AllAboutMyAccount|AddFnF
@@ -1248,7 +1246,7 @@ bot.dialog('AddFnF', [
 		session.replaceDialog("getInfoFeedback");		
     }
 ]).triggerAction({
-    matches: /(Add FnF)|(Add Friends and Family)|(How to add F&F)|(Add Friends & Family)/i
+    matches: /.*(Add FnF).*|.*(Add Friends and Family).*|.*(How to add F&F).*|.*(Add Friends & Family).*/i
 });
 
 // R.4.0.6 - menu|OtherQuestions|AllAboutMyAccount2
@@ -1272,7 +1270,7 @@ bot.dialog('AllAboutMyAccount2', [
 		session.replaceDialog("getInfoFeedback");		
     }
 ]).triggerAction({
-    matches: /(Account:Next Page)/i
+    matches: /.*(Account:Next Page).*/i
 });
 
 // R.4.0.6.0 - menu|OtherQuestions|AllAboutMyAccount|AllAboutMyAccount2|GoingOverseas
@@ -1286,7 +1284,7 @@ bot.dialog('GoingOverseas', [
         session.replaceDialog('Roaming');
     }
 ]).triggerAction({
-    matches: /(Going Overseas)|(Activate Roaming)|(I\'m going overseas)/i
+    matches: /.*(Going Overseas).*|.*(Activate Roaming).*|.*(I\'m going overseas).*/i
 });
 
 // R.4.0.6.1 - menu|OtherQuestions|AllAboutMyAccount|AllAboutMyAccount2|HowToActivateVolte
@@ -1309,7 +1307,7 @@ bot.dialog('HowToActivateVolte', [
 		session.replaceDialog("getInfoFeedback");		
     }
 ]).triggerAction({
-    matches: /(How to activate Volte)|(How do I activate VoLTE)|(volte)/i
+    matches: /.*(How to activate Volte).*|.*(How do I activate VoLTE).*|.*(volte).*/i
 });
 
 // R.4.0.6.1.0 - menu|OtherQuestions|AllAboutMyAccount|AllAboutMyAccount2|HowToActivateVolte|ActivateVolte
@@ -1345,7 +1343,7 @@ bot.dialog('ActivateVolte', [
 		session.replaceDialog("getInfoFeedback");		
     }
 ]).triggerAction({
-    matches: /(VoLTE Activation)/i
+    matches: /.*(VoLTE Activation).*/i
 });
 
 // R.4.0.6.2 - menu|OtherQuestions|AllAboutMyAccount|AllAboutMyAccount2|HowToPortIn
@@ -1377,7 +1375,7 @@ bot.dialog('HowToPortIn', [
 		session.replaceDialog("getInfoFeedback");		
     }
 ]).triggerAction({
-    matches: /(How to Port in)|(How do I port-in)|(port in)|(portin)/i
+    matches: /.*(How to Port in).*|.*(How do I port-in).*|.*(port in).*|.*(portin).*/i
 });
 
 // R.4.1 - menu|OtherQuestions|MyDigiApp
@@ -1399,7 +1397,7 @@ bot.dialog('MyDigiApp', [
 		session.replaceDialog("getInfoFeedback");		
     }        
 ]).triggerAction({
-    matches: /(MyDigi App)|(mydigi)|(my digi)/i
+    matches: /.*(MyDigi App).*|.*(mydigi).*|.*(my digi).*/i
 });
 
 // R.4.1.0 - menu|OtherQuestions|MyDigiApp|GetStartedMyDigi
@@ -1431,7 +1429,7 @@ bot.dialog('GetStartedMyDigi', [
         session.replaceDialog('menu');
     }
 ]).triggerAction({
-    matches: /(Get Started with MyDigi)|(How do I get started with MyDigi)/i
+    matches: /.*(Get Started with MyDigi).*|.*(How do I get started with MyDigi).*/i
 });
 
 // R.4.1.1 - menu|OtherQuestions|MyDigiApp|DownloadBillFrMyDigi
@@ -1457,7 +1455,7 @@ bot.dialog('DownloadBillFrMyDigi', [
 		session.replaceDialog("getInfoFeedback");		
     }        
 ]).triggerAction({
-    matches: /(Download Bill)|(download my bill)/i
+    matches: /.*(Download Bill).*|.*(download my bill).*/i
 });
 
 // R.4.1.1.0 - menu|OtherQuestions|MyDigiApp|DownloadBillFrMyDigi|SeeBillsForPastSixMonths
@@ -1493,7 +1491,7 @@ bot.dialog('SeeBillsForPastSixMonths', [
 		session.replaceDialog("getInfoFeedback");		
     }
 ]).triggerAction({
-    matches: /(Bills for past 6 months)|(previous bill)|(past bill)/i
+    matches: /.*(Bills for past 6 months).*|.*(previous bill).*|.*(past bill).*/i
 });
 
 // R.4.1.2 - menu|OtherQuestions|MyDigiApp|PayForAnotherNumber
@@ -1534,7 +1532,7 @@ bot.dialog('PayForAnotherNumber', [
 		session.replaceDialog("getInfoFeedback");		
     }
 ]).triggerAction({
-    matches: /(Pay For Another Number)|(make payment for another via MyDigi)|(make payment for another number)/i
+    matches: /.*(Pay For Another Number).*|.*(make payment for another via MyDigi).*|.*(make payment for another number).*/i
 });
 
 // R.4.2 - menu|OtherQuestions|TalkTimeServices
@@ -1554,7 +1552,7 @@ bot.dialog('TalkTimeServices', [
 		session.replaceDialog("getInfoFeedback");		
     }
 ]).triggerAction({
-    matches: /(Talk Time Services)/i
+    matches: /.*(Talk Time Services).*/i
 });
 
 // R.4.2.0 - menu|OtherQuestions|TalkTimeServices|TalkTimeTransfer
@@ -1585,7 +1583,7 @@ bot.dialog('TalkTimeTransfer', [
 		session.replaceDialog("getInfoFeedback");		
     }
 ]).triggerAction({
-    matches: /(Talk Time Transfer)|(How do I do a talk-time transfer)|(?=.*\btalk\b)(?=.*\btalk\b)(?=.*\btransfer\b).*$/i
+    matches: /.*(Talk Time Transfer).*|.*(How do I do a talk-time transfer).*|.*(?=.*\btalk\b)(?=.*\btalk\b)(?=.*\btransfer\b).*$/i
 });
 
 // R.4.3 - menu|OtherQuestions|ChargesOrBilling
@@ -1608,7 +1606,7 @@ bot.dialog('ChargesOrBilling', [
 		session.replaceDialog("getInfoFeedback");		
     }
 ]).triggerAction({
-    matches: /(Charges Billing)|(billing)|(charges)|(1800)/i
+    matches: /.*(Charges Billing).*|.*(billing).*|.*(charges).*|.*(1800).*/i
 });
 
 // R.4.3.0 - menu|OtherQuestions|ChargesOrBilling|ChargeForCallingTollFree
@@ -1620,7 +1618,7 @@ bot.dialog('ChargeForCallingTollFree', [
 		session.replaceDialog("getInfoFeedback");		
     }
 ]).triggerAction({
-    matches: /(Charge for calling toll free)|(calling tollfree)|(Will I be charged for calling 1300 1800 numbers)/i
+    matches: /.*(Charge for calling toll free).*|.*(calling tollfree).*|.*(Will I be charged for calling 1300 1800 numbers).*/i
 });
 
 // R.4.3.1 - menu|OtherQuestions|ChargesOrBilling|ChargeForBuddyz
@@ -1632,7 +1630,7 @@ bot.dialog('ChargeForBuddyz', [
 		session.replaceDialog("getInfoFeedback");		
     }
 ]).triggerAction({
-    matches: /(Charge For Buddyz)|(Why is there an RM10 charge for my Buddyz)|(buddyz)/i
+    matches: /.*(Charge For Buddyz).*|.*(Why is there an RM10 charge for my Buddyz).*|.*(buddyz).*/i
 });
 
 // R.4.3.0 - menu|OtherQuestions|ChargesOrBilling|ChangeBillingCycle
@@ -1644,7 +1642,7 @@ bot.dialog('ChangeBillingCycle', [
 		session.replaceDialog("getInfoFeedback");		
     }
 ]).triggerAction({
-    matches: /(Change Billing Cycle)|(Can I change my billing cycle)|(bill cycle)/i
+    matches: /.*(Change Billing Cycle).*|.*(Can I change my billing cycle).*|.*(bill cycle).*/i
 });
 
 
@@ -1841,25 +1839,6 @@ bot.dialog('SmallTalk1', [
     }
 ]).triggerAction({
     matches: /(hi)|(hello)|(are you)|(name)|(call you)/i
-});
-
-bot.dialog('SmallTalk2', [
-    function (session) {
-        trackBotEvent(session, 'smalltalk2',1);
-
-        session.send("I'm glad to help you. You can type menu, or press any buttons above. ");
-    }
-]).triggerAction({
-    matches: /(bot)|(great)|(thank you)/i
-});
-
-bot.dialog('SmallTalk3', [
-    function (session) {
-        trackBotEvent(session, 'smalltalk3',1);
-        session.send("I see. We will try to improve. You can ask me anything on Digi products");
-    }
-]).triggerAction({
-    matches: /(clever)|(bad)|(sucks)/i
 });
 
 bot.dialog('getBotFeedback', [
@@ -2211,6 +2190,52 @@ bot.dialog('PrepaidAccountOverview', [
     }
 ])
 
+////////////////////////////////////////////////////////////////////////////////////////
+// This menu will act like catch all if it couldn't match the expressions above
+// we will forward these to LUIS or API.AI
+function findStackAction(routes, name) {
+    for (var i = 0; i < routes.length; i++) {
+        var r = routes[i];
+        if (r.routeType === builder.Library.RouteTypes.StackAction &&
+            r.routeData.action === name) {
+                return r;
+        }
+    }
+    return null;
+}
+
+bot.dialog('CatchAll', [
+    function (session) {
+
+console.log("text: "+session.message.text + apiai_app);
+		var request = apiai_app.textRequest(session.message.text, {
+			sessionId: `${math.randomInt(100000,999999)}`
+		});
+
+		request.on('response', function(response) {
+			if(response.result.action==undefined){
+				session.send("Let's get back to our chat on Digi");
+			} else {		// We have response from API.AI
+				console.log("API.AI [" +response.result.resolvedQuery + '][' + response.result.action + '][' + response.result.score + ']['  + response.result.fulfillment.speech);
+	//			console.log('API.AI response text:'+ response.result.fulfillment.speech);
+	//			console.log('API.AI response text:'+ response.result.fulfillment.messages[0].speech);
+	//			console.log('API.AI response:'+ JSON.stringify(response.result));
+				session.send(response.result.fulfillment.speech);				
+			}
+		});
+
+		request.on('error', function(error) {
+			console.log('API.AI error:'+error);
+		});
+
+		request.end();
+	}
+]).triggerAction({
+    matches: /^.*$/i
+});
+
+
+
 // Connector listener wrapper to capture site url
 var connectorListener = connector.listen();
 function listen() {
@@ -2224,5 +2249,4 @@ function listen() {
 module.exports = {
     listen: listen,
 };
-
 
