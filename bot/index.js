@@ -60,7 +60,7 @@ var bot = new builder.UniversalBot(connector, [
 
 ]).set('autoBatchDelay',1000);
 // Require Functions
-bot.library(require('./validators').createLibrary());
+//bot.library(require('./validators').createLibrary());
 bot.library(require('./dialogs/uidemo').createLibrary());
 
 // start by getting API Gateway token first
@@ -325,42 +325,42 @@ bot.dialog('menu', [
         // Store new unique ID for this conversation's Dialog
         session.privateConversationData[DialogId] = session.message.address.id;
         
-//        var respCards = new builder.Message(session)
-//            .attachmentLayout(builder.AttachmentLayout.carousel)
-//            .attachments([
-//                new builder.HeroCard(session)
-//                .text('Just click on any of the below and let\'s get started.')
-//                .buttons([
-//                    builder.CardAction.imBack(session, "Prepaid", "Prepaid"),
-//                    builder.CardAction.imBack(session, "Postpaid", "Postpaid"),
-//                    builder.CardAction.imBack(session, "Broadband", "Broadband"),
-//                    builder.CardAction.imBack(session, "Roaming", "Roaming"),
-//                    builder.CardAction.imBack(session, "Other Questions", "Other Questions")
-//                ])])
-//		;
-//
+        var respCards = new builder.Message(session)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+                new builder.HeroCard(session)
+                .text('Just click on any of the below and let\'s get started.')
+                .buttons([
+                    builder.CardAction.imBack(session, "Prepaid", "Prepaid"),
+                    builder.CardAction.imBack(session, "Postpaid", "Postpaid"),
+                    builder.CardAction.imBack(session, "Broadband", "Broadband"),
+                    builder.CardAction.imBack(session, "Roaming", "Roaming"),
+                    builder.CardAction.imBack(session, "Other Questions", "Other Questions")
+                ])])
+		;
+
 //		session.send(respCards);
-        var msg = new builder.Message(session)
-            .text("Just click on any of the below and let\'s get started.")
-            .suggestedActions(
-                builder.SuggestedActions.create(
-                    session,[
-                        builder.CardAction.imBack(session, "Prepaid", "Prepaid"),
-                        builder.CardAction.imBack(session, "Postpaid", "Postpaid"),
-                        builder.CardAction.imBack(session, "Broadband", "Broadband"),
-                        builder.CardAction.imBack(session, "Roaming", "Roaming"),
-                        builder.CardAction.imBack(session, "Other Questions", "Other Questions")
-                    ]
-                )
-            );
-		session.send(msg);
-	}
-//        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
-//    },
-//    function (session, results) {
-//        session.send(DefaultMaxRetryErrorPrompt);
-//        session.replaceDialog('menu');
-//    }
+//        var respCards = new builder.Message(session)
+//            .text("Just click on any of the below and let\'s get started.")
+//            .suggestedActions(
+//                builder.SuggestedActions.create(
+//                    session,[
+//                        builder.CardAction.imBack(session, "Prepaid", "Prepaid"),
+//                        builder.CardAction.imBack(session, "Postpaid", "Postpaid"),
+//                        builder.CardAction.imBack(session, "Broadband", "Broadband"),
+//                        builder.CardAction.imBack(session, "Roaming", "Roaming"),
+//                        builder.CardAction.imBack(session, "Other Questions", "Other Questions")
+//                    ]
+//                )
+//            );
+//		session.send(respCards);
+//	}
+        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
+    },
+    function (session, results) {
+        session.send(DefaultMaxRetryErrorPrompt);
+        session.replaceDialog('menu');
+    }
 ]).triggerAction({
     matches: /^(main menu)|(menu)|(begin)|(Let\'s get started)$/i
 });
@@ -1106,24 +1106,27 @@ bot.dialog('GetAccountNo', [
 					]
 				)
 			);
-		session.send(respCards);
+        builder.Prompts.choice(session, respCards, "Yes|No", { maxRetries:MaxRetries_SingleMenu});
 	},
     function(session, results) {
-        switch (results.response.index) {
-            case 0:
-                trackBotEvent(session,'menu|OtherQuestions|AllAboutMyAccount|GetAccountNo|Yes',1,0);
-				session.send("Thanks for your feedback");
-				session.endDialog();
-                break;
-            case 1:
-                trackBotEvent(session,'menu|OtherQuestions|AllAboutMyAccount|GetAccountNo|No',1,0);
-				session.send("Thanks for your feedback. We will improve");
-				session.endDialog();
-                break;
-			default:
-				session.send(DefaultMaxRetryErrorPrompt);
-				session.replaceDialog('menu');
-				break;
+		if(results.response==undefined){
+			session.replaceDialog('menu');			
+		} else {
+			switch (results.response.index) {
+				case 0:
+					trackBotEvent(session,'menu|OtherQuestions|AllAboutMyAccount|GetAccountNo|Yes',1,0);
+					session.send("Thanks for your feedback. I'm glad we can help");
+					session.endDialog();
+					break;
+				case 1:
+					trackBotEvent(session,'menu|OtherQuestions|AllAboutMyAccount|GetAccountNo|No',1,0);
+					session.send("Thanks for your feedback. We will improve");
+					session.endDialog();
+					break;
+				default:
+					break;
+			}			
+			session.replaceDialog('menu');
 		}
     }
 ]).triggerAction({
@@ -1996,7 +1999,7 @@ bot.dialog('CheckMyAccount', [
         {
             session.send("Just let us verify your identity for a sec ");
 
-            session.beginDialog('validators:phonenumber');
+//            session.beginDialog('validators:phonenumber');
         } else {
             session.replaceDialog('PrepaidAccountOverview');
             return;
