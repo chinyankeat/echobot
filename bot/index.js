@@ -339,28 +339,28 @@ bot.dialog('menu', [
                 ])])
 		;
 
-//		session.send(respCards);
-//        var respCards = new builder.Message(session)
-//            .text("Just click on any of the below and let\'s get started.")
-//            .suggestedActions(
-//                builder.SuggestedActions.create(
-//                    session,[
-//                        builder.CardAction.imBack(session, "Prepaid", "Prepaid"),
-//                        builder.CardAction.imBack(session, "Postpaid", "Postpaid"),
-//                        builder.CardAction.imBack(session, "Broadband", "Broadband"),
-//                        builder.CardAction.imBack(session, "Roaming", "Roaming"),
-//                        builder.CardAction.imBack(session, "Other Questions", "Other Questions")
-//                    ]
-//                )
-//            );
-//		session.send(respCards);
-//	}
-        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
-    },
-    function (session, results) {
-        session.send(DefaultMaxRetryErrorPrompt);
-        session.replaceDialog('menu');
-    }
+		session.send(respCards);
+        var respCards = new builder.Message(session)
+            .text("Just click on any of the below and let\'s get started.")
+            .suggestedActions(
+                builder.SuggestedActions.create(
+                    session,[
+                        builder.CardAction.imBack(session, "Prepaid", "Prepaid"),
+                        builder.CardAction.imBack(session, "Postpaid", "Postpaid"),
+                        builder.CardAction.imBack(session, "Broadband", "Broadband"),
+                        builder.CardAction.imBack(session, "Roaming", "Roaming"),
+                        builder.CardAction.imBack(session, "Other Questions", "Other Questions")
+                    ]
+                )
+            );
+		session.send(respCards);
+	}
+//        builder.Prompts.choice(session, respCards, AnyResponse, { listStyle:builder.ListStyle.button, maxRetries:MaxRetries, retryPrompt:DefaultErrorPrompt});
+//    },
+//    function (session, results) {
+//        session.send(DefaultMaxRetryErrorPrompt);
+//        session.replaceDialog('menu');
+//    }
 ]).triggerAction({
     matches: /^(main menu)|(menu)|(begin)|(Let\'s get started)$/i
 });
