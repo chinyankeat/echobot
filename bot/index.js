@@ -2221,7 +2221,7 @@ bot.dialog('CatchAll', [
 				if(response.result.action==undefined){
 					session.send("Let's get back to our chat on Digi");
 				} else {		// We have response from API.AI
-					console.log("API.AI [" +response.result.resolvedQuery + '][' + response.result.action + '][' + response.result.score + ']['  + response.result.fulfillment.speech + ']');
+					session.send("API.AI [" +response.result.resolvedQuery + '][' + response.result.action + '][' + response.result.score + ']['  + response.result.fulfillment.speech + ']');
 		//			console.log('API.AI response text:'+ response.result.fulfillment.speech);
 		//			console.log('API.AI response text:'+ response.result.fulfillment.messages[0].speech);
 		//			console.log('API.AI response:'+ JSON.stringify(response.result));
@@ -2235,6 +2235,7 @@ bot.dialog('CatchAll', [
 
 			request.on('error', function(error) {
 				console.log('API.AI error:'+error);
+				session.send('API.AI error:'+error);
 				apiai_error_timeout = Date.now() + process.env.APIAI_ERROR_TIMEOUT*1000;	// Do not use NLP for the next 1 day
 				session.send("Let's get back to our chat on Digi");
 			});
