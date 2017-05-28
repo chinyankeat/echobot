@@ -2214,7 +2214,6 @@ bot.dialog('CatchAll', [
 			apiai_error_timeout = 0;	// Reset timeout if prevously set to some value
 			var randSessionId = '000000' + math.randomInt(100000,999999);
 
-session.send("api ai key = " + process.env.APIAI_CLIENT_ACCESS_TOKEN);
 			var request = apiai_app.textRequest(session.message.text, {
 				sessionId: randSessionId
 			});
@@ -2251,6 +2250,29 @@ session.send("api ai key = " + process.env.APIAI_CLIENT_ACCESS_TOKEN);
 	}
 ]).triggerAction({
     matches: /^.*$/i
+});
+
+
+bot.dialog('printenv', [
+    function (session) {
+		session.send("here are the lists: ");
+		session.send("APP_SECRET :" + process.env.APP_SECRET);
+		session.send("SBP_SMS_AUTHORIZATIONKEY :" + process.env.SBP_SMS_AUTHORIZATIONKEY);
+		session.send("SBP_SMS_SENDURL :" + process.env.SBP_SMS_SENDURL);
+		session.send("APIGW_URL :" + process.env.APIGW_URL);
+		session.send("APIGW_SMS_AUTH_CLIENT_ID :" + process.env.APIGW_SMS_AUTH_CLIENT_ID);
+		session.send("APIGW_SMS_AUTH_CLIENT_SECRET :" + process.env.APIGW_SMS_AUTH_CLIENT_SECRET);
+		session.send("CHATBOT_LOG_AUTH_KEY :" + process.env.CHATBOT_LOG_AUTH_KEY);
+		session.send("CHATBOT_LOG_URL :" + process.env.CHATBOT_LOG_URL);
+		session.send("DEVELOPMENT :" + process.env.DEVELOPMENT);
+		session.send("LOGGING :" + process.env.LOGGING);
+		session.send("APPINSIGHTS_INSTRUMENTATIONKEY :" + process.env.APPINSIGHTS_INSTRUMENTATIONKEY);
+		session.send("OFFLINE :" + process.env.OFFLINE);
+		session.send("APIAI_CLIENT_ACCESS_TOKEN :" + process.env.APIAI_CLIENT_ACCESS_TOKEN);
+		session.send("APIAI_ERROR_TIMEOUT :" + process.env.APIAI_ERROR_TIMEOUT);		
+	}
+]).triggerAction({
+    matches: /^(printenv)$/
 });
 
 
