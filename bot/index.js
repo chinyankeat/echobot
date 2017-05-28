@@ -2214,6 +2214,7 @@ bot.dialog('CatchAll', [
 			apiai_error_timeout = 0;	// Reset timeout if prevously set to some value
 			var randSessionId = '000000' + math.randomInt(100000,999999);
 
+session.send("api ai key = " + process.env.APIAI_CLIENT_ACCESS_TOKEN);
 			var request = apiai_app.textRequest(session.message.text, {
 				sessionId: randSessionId
 			});
